@@ -1,4 +1,6 @@
 import {
+  faAngleDown,
+  faAngleUp,
   faBackwardStep,
   faBars,
   faCirclePlus,
@@ -14,13 +16,43 @@ import {
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useContext, useState } from "react";
+import DataContext from "../context/DataContext";
 
 const Footer = () => {
+  const [isImgHovered, setIsImgHovered] = useState(false);
+  const {
+    isRightSideBarColsed,
+    setIsRightSideBarColsed,
+    setRightWidth,
+    rightWidth,
+  } = useContext(DataContext);
+
+  const handleArrowClick = () => {
+    setIsRightSideBarColsed((prv) => !prv);
+    if (rightWidth === 0) {
+      setRightWidth(285);
+    }
+  };
+  const showRightSideBarIcon = isRightSideBarColsed ? (
+    <FontAwesomeIcon icon={faAngleUp} />
+  ) : (
+    <FontAwesomeIcon icon={faAngleDown} />
+  );
   return (
     <div className="footer-component">
       <div className="footer-song-component">
-        <div className="footer-song-image-container">
+        <div
+          className="footer-song-image-container"
+          onMouseEnter={() => setIsImgHovered(true)}
+          onMouseLeave={() => setIsImgHovered(false)}
+        >
+          <div
+            onClick={handleArrowClick}
+            style={{ display: isImgHovered ? "flex" : "none" }}
+          >
+            {showRightSideBarIcon}
+          </div>
           <img src="https://via.placeholder.com/100" alt="song-image" />
         </div>
         <div>

@@ -1,30 +1,29 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import "./App.css";
 import Footer from "./components/Footer";
 import Layout from "./components/Layout";
-import LeftSideBar from "./components/LeftSideBar";
+import LeftSideBar from "./components/left_side_bar/LeftSideBar";
 import Navbar from "./components/Navbar";
-import RightsideBar from "./components/RightsideBar";
+import RightsideBar from "./components/right_side_bar/RightsideBar";
+import DataContext from "./context/DataContext";
 
 function App() {
-  //for resizer
-
-  const [leftWidth, setLeftWidth] = useState(260);
-  const [rightWidth, setRightWidth] = useState(285);
 
   const [isHoveredLeft, setIsHoveredLeft] = useState(false);
   const [isActiveLeft, setIsActiveLeft] = useState(false);
   const [isHoveredRight, setIsHoveredRight] = useState(false);
   const [isActiveRight, setIsActiveRight] = useState(false);
 
+  const { isRightSideBarColsed, rightWidth, setRightWidth,leftWidth,setLeftWidth } =
+    useContext(DataContext);
   const containerRef = useRef(null);
-
+  //for resize
   const handelMouseMoveLeft = (e) => {
     const newWidth =
       e.clientX - containerRef.current.getBoundingClientRect().left;
     if (newWidth < 150) {
-      setLeftWidth(100);
-    } else if (!(newWidth < 259 && newWidth > 100) && newWidth < 400) {
+      setLeftWidth(90);
+    } else if (!(newWidth < 285) && newWidth < 400) {
       setLeftWidth(newWidth);
     }
   };
@@ -52,6 +51,9 @@ function App() {
     setIsActiveRight(false);
     setIsActiveLeft(false);
   };
+
+  
+
   return (
     <div className="App">
       <Navbar />
@@ -60,7 +62,7 @@ function App() {
           className="left-sidebar-container"
           style={{ width: `${leftWidth}px` }}
         >
-          <LeftSideBar />
+          <LeftSideBar leftWidth={leftWidth} />
           <div
             className="resizer"
             onMouseDown={startResizeLeft}
@@ -75,10 +77,13 @@ function App() {
             ></div>
           </div>
         </div>
-        <Layout rightWidth={rightWidth} leftWidth={leftWidth} />
+        <Layout/>
         <div
           className="right-sidebar-container"
-          style={{ width: `${rightWidth}px` }}
+          style={{
+            display: isRightSideBarColsed ? "none" : "flex",
+            width: `${rightWidth}px`,
+          }}
         >
           <div
             className="resizer"
@@ -94,10 +99,7 @@ function App() {
               }}
             ></div>
           </div>
-          <RightsideBar
-            rightWidth={rightWidth}
-            startResizeRight={startResizeRight}
-          />
+          <RightsideBar />
         </div>
       </div>
       <Footer />

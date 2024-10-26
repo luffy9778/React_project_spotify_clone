@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -7,17 +7,30 @@ import {
   faCircleDown,
   faFolderOpen,
 } from "@fortawesome/free-regular-svg-icons";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const [isSerchHovered, setIsSerchHovered] = useState(false);
+  const navigate=useNavigate()
   return (
     <nav>
       <div className="nav-app-logo">
         <FontAwesomeIcon icon={faSpotify} />
       </div>
       <div className="nav-items">
-        <div className="nav-home-icon">
+        <div className="nav-home-icon" onClick={()=>navigate("/")}>
           <FontAwesomeIcon icon={faHouse} />
         </div>
-        <div className="nav-searchbar-container">
+        <div
+          className="nav-searchbar-container"
+          onMouseEnter={() => setIsSerchHovered(true)}
+          onMouseLeave={() => setIsSerchHovered(false)}
+          onClick={()=>navigate("/search")}
+          style={{
+            backgroundColor: isSerchHovered
+              ? "rgb(35, 35, 35)"
+              : "var(--grey-bgc)",
+          }}
+        >
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             className="nav-search-icon"
@@ -26,9 +39,16 @@ const Navbar = () => {
             type="text"
             className="nav-searchbar"
             placeholder="What do you want to play?"
+            style={{
+              backgroundColor: isSerchHovered
+                ? "rgb(35, 35, 35)"
+                : "var(--grey-bgc)",
+            }}
           />
           <div className="nav-search-line"></div>
-          <FontAwesomeIcon icon={faFolderOpen} className="nav-browse-icon" />
+          <div className="nav-browse-icon-container">
+            <FontAwesomeIcon icon={faFolderOpen} className="nav-browse-icon" />
+          </div>
         </div>
         <div className="nav-premium-btn-container">
           <button className="nav-premium-btn">Explore Premium</button>
