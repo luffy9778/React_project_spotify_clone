@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const [isRightSideBarColsed, setIsRightSideBarColsed] = useState(false);
   const [rightWidth, setRightWidth] = useState(285);
   const [leftWidth, setLeftWidth] = useState(285);
+  
   const centerWidth = window.innerWidth - (leftWidth + rightWidth);
 //for handle rightsidebar closing
   const handleRightSidebarClose = () => {
@@ -13,6 +14,11 @@ export const DataProvider = ({ children }) => {
     setRightWidth(0);
   };
 
+  const[scrollPosition,setScrollposition]=useState(0)
+  const [bgColor, setBgColor] = useState(
+    "linear-gradient(180deg, rgba(80,40,240,0.5) 0%, rgba(18,18,18,1) 100%)"
+  );
+ 
   return (
     <DataContext.Provider
       value={{
@@ -22,7 +28,9 @@ export const DataProvider = ({ children }) => {
         setRightWidth,
         rightWidth,
         leftWidth,setLeftWidth,
-        centerWidth
+        centerWidth,
+        scrollPosition,setScrollposition,
+        bgColor, setBgColor
       }}
     >
       {children}

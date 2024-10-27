@@ -1,14 +1,14 @@
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React from 'react'
 
 const LeftListComponent = ({data,leftWidth}) => {
 
-    const border_Radius=data.type=="Artist"?"50%":"5px"
+    const border_Radius=data.type==="Artist"?"50%":"5px"
 
     const listType_content=(data.type==="Liked Songs"?(<><span className='left-sidebar__list-pinIcon' ><FontAwesomeIcon icon={faThumbtack} className='pinIcon'/></span>{data.type}<span> . 51 songs</span></>):data.type) 
 
-    const content=(leftWidth==90?(<div className='left-sidebar__list-component-small'>
+    const content=(leftWidth===90?(<div className='left-sidebar__list-component-small'>
         <div className='left-sidebar__list-image' style={{borderRadius:border_Radius}}>
             <img src='https://via.placeholder.com/100' alt='' style={{borderRadius:border_Radius}}/>
         </div>

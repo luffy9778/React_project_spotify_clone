@@ -1,10 +1,6 @@
 import React from 'react'
 
 const CreditsList = () => {
-    // vishnu sanajy
-    // Composer
-    // vinayak Sasikumar
-    // Lyricist
   return (
     <div className='rsidebar__credit-list'>
         <div className='rsidebar__credit-artist'>

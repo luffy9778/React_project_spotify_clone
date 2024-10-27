@@ -16,6 +16,7 @@ function App() {
 
   const { isRightSideBarColsed, rightWidth, setRightWidth,leftWidth,setLeftWidth } =
     useContext(DataContext);
+    
   const containerRef = useRef(null);
   //for resize
   const handelMouseMoveLeft = (e) => {
