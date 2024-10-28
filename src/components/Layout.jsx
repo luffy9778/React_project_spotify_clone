@@ -6,6 +6,7 @@ import Search from "../pages/Search";
 import HomeLayout from "./home/HomeLayout";
 import PodcastContainer from "../pages/PodcastContainer";
 import MusicPage from "../pages/MusicPage";
+import Album from "./album/Album";
 
 const Layout = () => {
   const { leftWidth, rightWidth, setScrollposition } =
@@ -35,7 +36,7 @@ const Layout = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/likedsongs" element={<Search />} />
         <Route path="/section" element={<Search />} />
-        <Route path="/artist" element={<Search />} />
+        <Route path="/artist/:id" element={<Album/>} />
       </Routes>
     </div>
   );
