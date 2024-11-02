@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import SearchCard from "../components/search/SearchCard";
 
 const Search = () => {

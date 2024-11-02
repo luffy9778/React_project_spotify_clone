@@ -400,6 +400,7 @@ height: 45px;
 }
 
 .left-sidebar__list-component{
+  cursor: pointer;
   display: flex;
   width:auto;
   height: 63px;
@@ -409,6 +410,7 @@ height: 45px;
   transition:background-color 0.5s ;
 }
 .left-sidebar__list-component-small{
+  cursor: pointer;
   display: flex;
   width:100%;
   margin-inline:5px ;
@@ -691,6 +693,7 @@ height: 45px;
   background: linear-gradient(180deg, rgba(80,40,240,0.5) 0%, rgba(18,18,18,1) 100%);   */
 }
 .home-navgate-button-container{
+  cursor: pointer;
   box-sizing: border-box;
   z-index: 1;
   padding-inline: 18px;
@@ -704,6 +707,9 @@ height: 45px;
   /* margin-inline:13px ; */
 }
 .home-navgate-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 22px;
   color: white;
   background-color: var(--transparant-bgc);
@@ -729,6 +735,7 @@ height: 45px;
   flex-wrap: wrap;
 }
 .home__visited-list{
+  cursor: pointer;
   height: 50px;
   display: flex;
   background-color: var(--transparant-bgc);
