@@ -57,7 +57,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="nav-premium-btn-container">
-          <button className="nav-premium-btn">Explore Premium</button>
+          <div className="nav-premium-btn">Explore Premium</div>
         </div>
         <div className="nav-download-btn-container">
           <div className="nav-download-btn">

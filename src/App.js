@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route element={<RequireAuth allowedRoles={"User"}/>}>
+        {/* <Route element={<RequireAuth allowedRoles={"User"}/>}> */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/musics" element={<MusicPage />} />
@@ -25,7 +25,7 @@ function App() {
           <Route path="/artist/:id" element={<Album />} />
           {/* <Route path="*" element={<Home />} /> */}
         </Route>
-        </Route>
+        {/* </Route> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<h1>404 page not found</h1>}/> */}

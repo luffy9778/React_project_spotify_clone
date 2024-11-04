@@ -11,6 +11,7 @@
   --transparant-bgc:hsla(0, 0%, 58%, 0.1);
   --transparant-bgc-hover:hsla(0, 0%, 58%,0.2);
 }
+
 /*///////---------scroll bar----------/////////*/
 ::-webkit-scrollbar {
   width: 8px; 
@@ -162,6 +163,14 @@ nav{
   transform: scale(1.1);
 }
 .nav-premium-btn{
+  /* tailwind */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  box-sizing: content-box;
+  font-size: 0.9rem;
+  /*  */
   cursor: pointer;
   background-color: white;
   border: none;
@@ -169,7 +178,7 @@ nav{
   width: 150px;
   border-radius: 30px;
   font-weight: bold;
-  padding-inline: 20px;
+  /* padding-inline: 20px; */
   transition: all 0.3s;
 }
 .nav-premium-btn-container{
@@ -282,6 +291,7 @@ nav{
   z-index: 1;
   position: sticky;
   top:0px;/*************/
+  padding-top: 20px;
   background-color: var(--grey-bgc);
 }
 .lsidebar-scrollable-container{
@@ -707,6 +717,9 @@ height: 45px;
   /* margin-inline:13px ; */
 }
 .home-navgate-button{
+  /* tailwind */
+  box-sizing: content-box;
+  /*  */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -817,6 +830,9 @@ height: 45px;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  /* tailwind */
+  box-sizing: content-box;
+  /*  */
 }
 .home-album-list-card:hover{
   background-color: var(--lite-grey-bgc);
