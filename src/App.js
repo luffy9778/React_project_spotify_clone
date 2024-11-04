@@ -6,12 +6,15 @@ import MusicPage from "./pages/MusicPage";
 import PodcastContainer from "./pages/PodcastContainer";
 import Search from "./pages/Search";
 import Album from "./components/album/Album";
-import Login from "./pages/Login";
+import Login from "./pages/auth/Login";
+import SignUp from "./pages/auth/SignUp";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route element={<RequireAuth allowedRoles={"User"}/>}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/musics" element={<MusicPage />} />
@@ -22,7 +25,9 @@ function App() {
           <Route path="/artist/:id" element={<Album />} />
           {/* <Route path="*" element={<Home />} /> */}
         </Route>
-        <Route path="/login" element={<Login/>}/>
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<h1>404 page not found</h1>}/> */}
       </Routes>
     </div>

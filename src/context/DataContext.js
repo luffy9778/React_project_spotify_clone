@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
     setRightWidth(0);
   };
 
-  const[scrollPosition,setScrollposition]=useState(0)
+  // const[scrollPosition,setScrollposition]=useState(0)
   const [bgColor, setBgColor] = useState(
     "linear-gradient(180deg, rgba(80,40,240,0.5) 0%, rgba(18,18,18,1) 100%)"
   );
@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
         rightWidth,
         leftWidth,setLeftWidth,
         centerWidth,
-        scrollPosition,setScrollposition,
+        // scrollPosition,setScrollposition,
         bgColor, setBgColor
       }}
     >

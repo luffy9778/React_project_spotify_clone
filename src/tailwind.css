@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.login-container input{
+    @apply rounded-xl py-3 pl-3 my-3 mx-24 bg-transparent border border-slate-500 hover:border-white;
+}

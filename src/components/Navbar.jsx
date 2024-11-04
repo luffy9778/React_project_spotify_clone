@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +8,14 @@ import {
   faFolderOpen,
 } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+
 const Navbar = () => {
+
   const [isSerchHovered, setIsSerchHovered] = useState(false);
+
+  const {auth}=useContext(AuthContext)
+
   const navigate=useNavigate()
   return (
     <nav>
@@ -63,7 +69,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faBell} className="nav-notification-icon" />
         </div>
         <div className="nav-user-icon-container">
-          <div className="nav-user-icon">P</div>
+          <div className="nav-user-icon">{auth?.userInfo?.name.slice(0,1)}</div>
         </div>
       </div>
     </nav>

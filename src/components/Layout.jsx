@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import DataContext from "../context/DataContext";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import LeftSideBar from "./left_side_bar/LeftSideBar";
 import RightsideBar from "./right_side_bar/RightsideBar";
@@ -8,23 +8,27 @@ import Footer from "./Footer";
 
 
 const Layout = () => {
-    const [isHoveredLeft, setIsHoveredLeft] = useState(false);
+  const [isHoveredLeft, setIsHoveredLeft] = useState(false);
   const [isActiveLeft, setIsActiveLeft] = useState(false);
   const [isHoveredRight, setIsHoveredRight] = useState(false);
   const [isActiveRight, setIsActiveRight] = useState(false);
 
-  const { leftWidth, rightWidth, setScrollposition,isRightSideBarColsed,  setRightWidth,setLeftWidth  } =
+  const { leftWidth, rightWidth,isRightSideBarColsed,  setRightWidth,setLeftWidth  } =
     useContext(DataContext);
 
   const scrollRef = useRef(null);
   const containerRef = useRef(null);
 
+  const {pathname}=useLocation()
+  useEffect(()=>{
+    scrollRef.current.scrollTo(0,0)
+  },[pathname])
   
-  const handlescroll = () => {
-    if (scrollRef.current) {
-      setScrollposition(scrollRef.current.scrollTop);
-    }
-  };
+  // const handlescroll = () => {
+  //   if (scrollRef.current) {
+  //     setScrollposition(scrollRef.current.scrollTop);
+  //   }
+  // };
 
   
   //for resize
@@ -88,7 +92,7 @@ const Layout = () => {
         <div
       className="page-container"
       ref={scrollRef}
-      onScroll={handlescroll}
+      // onScroll={handlescroll}
       style={{ flex: 1, width: `calc(100% - ${leftWidth + rightWidth}px)` }}
     >
     <Outlet/>
