@@ -9,10 +9,12 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import LogoutCotainer from "./LogoutCotainer";
 
 const Navbar = () => {
 
   const [isSerchHovered, setIsSerchHovered] = useState(false);
+  const [showLogut,setShowLogout]=useState(false)
 
   const {auth}=useContext(AuthContext)
 
@@ -68,8 +70,11 @@ const Navbar = () => {
         <div className="nav-notification-icon-container">
           <FontAwesomeIcon icon={faBell} className="nav-notification-icon" />
         </div>
-        <div className="nav-user-icon-container">
-          <div className="nav-user-icon">{auth?.userInfo?.name.slice(0,1)}</div>
+        <div className="nav-user-icon-container" onClick={()=>setShowLogout(prv=>!prv)}>
+          <div className="nav-user-icon">
+            {auth?.user.slice(0,1)}
+            </div>
+            {showLogut&&<LogoutCotainer/>}
         </div>
       </div>
     </nav>

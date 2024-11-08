@@ -270,6 +270,32 @@ nav{
   height: calc(100vh - 155px);
 }
 
+
+.logout{
+  z-index: 5;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width:130px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* color: #fff; */
+  border-radius: 10px;
+  background: var(--lite-grey-bgc);
+}
+.logout button{
+  border: none;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+.logout button:hover{
+  border: 1px solid white;
+}
+.logout button:active{
+  border: 2px solid white;
+}
 /*//////---------left sidebar-----------/////////////*/
 
 .lsidebar-component{

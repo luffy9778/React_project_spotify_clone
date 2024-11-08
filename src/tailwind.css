@@ -5,3 +5,6 @@
 .login-container input{
     @apply rounded-xl py-3 pl-3 my-3 mx-24 bg-transparent border border-slate-500 hover:border-white;
 }
+.login-container input[type="chekbox"]{
+    @apply rounded p-0 my-3 w-5 mx-2 border h-5
+}

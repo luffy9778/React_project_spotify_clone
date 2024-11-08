@@ -39,9 +39,11 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response.data)
       const accessToken = response.data.accessToken;
-      const userInfo = response.data.userInfo;
-      setAuth({ userInfo, accessToken });
+      const user= response.data.userInfo.name;
+      const roles= response.data.userInfo.roles;
+      setAuth({ user,roles, accessToken });
       setUsername("")
       setPassword("");
       navigate("/")
@@ -90,6 +92,8 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {/* <div className="w-full justify-start ml-24"><input type="chekbox"/><label className="text-sm">Trust this device</label>
+            </div> */}
             <button className="bg-green-500 mx-24 rounded-full py-3 font-bold text-xl text-black my-3 hover:scale-105 focus:ring-2 focus:ring-white transition-all duration-150">
               Log in
             </button>

@@ -9,26 +9,28 @@ import Album from "./components/album/Album";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        {/* <Route element={<RequireAuth allowedRoles={"User"}/>}> */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/musics" element={<MusicPage />} />
-          <Route path="/podcasts" element={<PodcastContainer />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/likedsongs" element={<Search />} />
-          <Route path="/section" element={<Search />} />
-          <Route path="/artist/:id" element={<Album />} />
-          {/* <Route path="*" element={<Home />} /> */}
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRoles={"User"} />}>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/musics" element={<MusicPage />} />
+              <Route path="/podcasts" element={<PodcastContainer />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/likedsongs" element={<Search />} />
+              <Route path="/section" element={<Search />} />
+              <Route path="/artist/:id" element={<Album />} />
+            </Route>
+          </Route>
         </Route>
-        {/* </Route> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        {/* <Route path="*" element={<h1>404 page not found</h1>}/> */}
+        <Route path="*" element={<h1>404 page not found</h1>}/>
       </Routes>
     </div>
   );
