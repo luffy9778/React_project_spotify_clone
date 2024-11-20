@@ -10,6 +10,17 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
+import { AdminDashBoard } from "./components/Admin/AdminDashBoard";
+import AdminHome from "./pages/Admin/AdminHome";
+import ViewSong from "./pages/Admin/songs/ViewSong";
+import AddSong from "./pages/Admin/songs/AddSong";
+import EditSong from "./pages/Admin/songs/EditSong";
+import ViewArtist from "./pages/Admin/artist/ViewArtist";
+import AddArtist from "./pages/Admin/artist/AddArtist";
+import EditArtist from "./pages/Admin/artist/EditArtist";
+import ViewPlaylist from "./pages/Admin/playlist/ViewPlaylist";
+import AddPlaylist from "./pages/Admin/playlist/AddPlaylist";
+import EditPlayList from "./pages/Admin/playlist/EditPlayList";
 
 function App() {
   return (
@@ -27,10 +38,31 @@ function App() {
               <Route path="/artist/:id" element={<Album />} />
             </Route>
           </Route>
+
+          <Route element={<RequireAuth allowedRoles={"Admin"} />}>
+            <Route path="/Admin" element={<AdminDashBoard />}>
+              <Route index element={<AdminHome />} />
+              <Route path="songs">
+                <Route index element={<ViewSong />} />
+                <Route path="add" element={<AddSong />} />
+                <Route path="edit/" element={<EditSong />} />
+              </Route>
+              <Route path="artist">
+                <Route index element={<ViewArtist />} />
+                <Route path="add" element={<AddArtist />} />
+                <Route path="edit/:id" element={<EditArtist />} />
+              </Route>
+              <Route path="playlist">
+                <Route index element={<ViewPlaylist />} />
+                <Route path="add" element={<AddPlaylist />} />
+                <Route path="edit" element={<EditPlayList />} />
+              </Route>
+            </Route>
+          </Route>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="*" element={<h1>404 page not found</h1>}/>
+        <Route path="*" element={<h1>404 page not found</h1>} />
       </Routes>
     </div>
   );

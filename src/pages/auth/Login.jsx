@@ -46,7 +46,11 @@ const Login = () => {
       setAuth({ user,roles, accessToken });
       setUsername("")
       setPassword("");
-      navigate("/")
+      if(roles?.includes("Admin")){
+        navigate("/Admin")
+      }else{
+        navigate("/")
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("no server response");
