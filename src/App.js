@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import MusicPage from "./pages/MusicPage";
 import PodcastContainer from "./pages/PodcastContainer";
 import Search from "./pages/Search";
-import Album from "./components/album/Album";
+import ArtistAlbums from "./pages/ArtistAlbums";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import RequireAuth from "./components/RequireAuth";
@@ -21,6 +21,8 @@ import EditArtist from "./pages/Admin/artist/EditArtist";
 import ViewPlaylist from "./pages/Admin/playlist/ViewPlaylist";
 import AddPlaylist from "./pages/Admin/playlist/AddPlaylist";
 import EditPlayList from "./pages/Admin/playlist/EditPlayList";
+import ViewAllPlaylist from "./pages/ViewAllPlaylist";
+import PlaylistAlbum from "./pages/PlaylistAlbum";
 
 function App() {
   return (
@@ -34,8 +36,9 @@ function App() {
               <Route path="/podcasts" element={<PodcastContainer />} />
               <Route path="/search" element={<Search />} />
               <Route path="/likedsongs" element={<Search />} />
-              <Route path="/section" element={<Search />} />
-              <Route path="/artist/:id" element={<Album />} />
+              <Route path="/section" element={<ViewAllPlaylist />} />
+              <Route path="/artist/:id" element={<ArtistAlbums />} />
+              <Route path="/playlist/:id" element={<PlaylistAlbum />} />
             </Route>
           </Route>
 

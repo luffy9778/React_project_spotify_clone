@@ -6,8 +6,8 @@ const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
 
-    const[likedSongs,setLikedSongs]=useState([])
-
+    const[userData,setUserData]=useState([])
+    // const[currentSong,setCurrentSong]=useState("")
   const axiosPrivate = useAxiosPrivate();
   const {auth}=useContext(AuthContext)
   
@@ -17,22 +17,17 @@ export const UserProvider = ({ children }) => {
     }
     const fetchData = async () => {
       try {
-        const response = await axiosPrivate.get("/likedsongs");
-        console.log(response.data,"d")
-        setLikedSongs(response.data)
+        const response = await axiosPrivate.get("/user");
+        setUserData(response.data)
       } catch (error) {
         // console.log(error)////////////
       }
     };
     fetchData();
-    // setTimeout(() => {
-    //   console.log("refreshed");
-    //   fetchData();
-    // }, 35000);
   }, [auth]);
 
   return <UserContext.Provider value={{
-    likedSongs,setLikedSongs
+    userData,setUserData
   }}>
     {children}
     </UserContext.Provider>;

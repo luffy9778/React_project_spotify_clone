@@ -13,11 +13,12 @@ import { leftData } from "../../dummyData";
 import UserContext from "../../context/UserContext";
 
 const LeftSideBar = ({ leftWidth }) => {
-  const { likedSongs } = useContext(UserContext);
-  // console.log(likedSongs)
-  // console.log(likedSongs.length>0)
+  const { userData } = useContext(UserContext);
+  const likedSongs = userData.likedSongs;
+  const artists = userData.artists;
+  const playlists = userData.playlist;
 
-  const liked = { type: "Liked Songs", name: "Playlist" };
+  console.log(likedSongs, artists, playlists);
 
   const content =
     leftWidth == 90 ? (
@@ -43,16 +44,40 @@ const LeftSideBar = ({ leftWidth }) => {
           className="lsidebar-scrollable-container"
           style={{ paddingInline: "5px" }}
         >
-          {likedSongs.length > 0 ? (
+          {likedSongs?.length > 0 ? (
             <LeftListComponent
               key={"liked"}
-              data={liked}
+              // id={///////}
+              type={"liked"}
+              name={"Liked Songs"}
+              image={"https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"}
               leftWidth={leftWidth}
             />
           ) : null}
-          {leftData.map((i) => (
-            <LeftListComponent key={i.name} data={i} leftWidth={leftWidth} />
-          ))}
+          {artists?.length > 0
+            ? artists.map((i) => (
+                <LeftListComponent
+                  key={i._id}
+                  id={i._id}
+                  image={i?.artistimage_Url}
+                  name={i?.artistname}
+                  type={"Artist"}
+                  leftWidth={leftWidth}
+                />
+              ))
+            : null}
+          {/* {playlists?.length > 0
+            ? artists.map((i) => (
+                <LeftListComponent
+                  key={i._id}
+                  id={i._id}
+                  image={i?.artistimage_Url}
+                  name={i?.artistname}
+                  type={"Artist"}
+                  leftWidth={leftWidth}
+                />
+              ))
+            : null} */}
         </div>
       </section>
     ) : (
@@ -103,16 +128,40 @@ const LeftSideBar = ({ leftWidth }) => {
               <FontAwesomeIcon icon={faListUl} />
             </div>
           </div>
-          {likedSongs.length > 0 ? (
+          {likedSongs?.length > 0 ? (
             <LeftListComponent
               key={"liked"}
-              data={liked}
+              // id={///////}
+              type={"liked"}
+              name={"Liked Songs"}
+              image={"https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"}
               leftWidth={leftWidth}
             />
           ) : null}
-          {leftData.map((i) => (
-            <LeftListComponent key={i.name} data={i} leftWidth={leftWidth} />
-          ))}
+          {artists?.length > 0
+            ? artists.map((i) => (
+                <LeftListComponent
+                  key={i._id}
+                  id={i._id}
+                  image={i?.artistimage_Url}
+                  name={i?.artistname}
+                  type={"Artist"}
+                  leftWidth={leftWidth}
+                />
+              ))
+            : null}
+            {/* {artists?.length > 0
+            ? artists.map((i) => (
+                <LeftListComponent
+                  key={i._id}
+                  id={i._id}
+                  image={i?.artistimage_Url}
+                  name={i?.artistname}
+                  type={"Artist"}
+                  leftWidth={leftWidth}
+                />
+              ))
+            : null} */}
         </div>
       </section>
     );

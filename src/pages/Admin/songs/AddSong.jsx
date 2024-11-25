@@ -7,11 +7,12 @@ const AddSong = () => {
   const [bgColour, setBgColour] = useState("");
   const [song, setSong] = useState("");
   const [image, setImage] = useState("");
-  const [tags, setTags] = useState("Malayalam");
+  const [tags, setTags] = useState("");
 
-  console.log(songName,artistName,bgColour,song,image,tags)
+  // console.log(songName,artistName,bgColour,song,image,tags)
 
   const [artistData, setArtistData] = useState([]);
+  const [tagstData, setTagsData] = useState([]);
 
   useEffect(() => {
     const fetchArtist = async () => {
@@ -25,6 +26,19 @@ const AddSong = () => {
     fetchArtist();
   }, []);
 
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await axiosPrivate.get("/tags");
+        // console.log(response.data)
+        setTagsData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTags();
+  }, []);
+
   const artistOptions = artistData.map((i) => {
     return (
       <option key={i._id} value={i.artistname}>
@@ -32,6 +46,15 @@ const AddSong = () => {
       </option>
     );
   });
+
+  const tagsOptions = tagstData.map((i) => {
+    return (
+      <option key={i._id} value={i._id}>
+        {i.tagName}
+      </option>
+    );
+  });
+
     const handleSubmit = async (e) => {
       e.preventDefault()
       try {
@@ -58,6 +81,7 @@ const AddSong = () => {
         setBgColour("")
         setImage("")
         setSong("")
+        setTags("")
       } catch (err) {
         console.log(err);
       }
@@ -81,6 +105,11 @@ const AddSong = () => {
         <select onChange={(e) => setArtistName(e.target.value)}>
           <option>select-artist</option>
           {artistOptions}
+        </select>
+        <br/>
+        <select onChange={(e) => setTags(e.target.value)}>
+          <option>select-tags</option>
+          {tagsOptions}
         </select>
         <br/>
         <label htmlFor="">select Image</label>

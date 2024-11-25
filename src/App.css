@@ -1148,7 +1148,7 @@ height: 45px;
   /* height: 250px; */
   aspect-ratio: 16/5;
   max-height: 250px;
-  background-color: green;
+  /* background-color: green; */
   align-items: center;
   padding-inline: 20px;
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
-const SearchCard = () => {
+const SearchCard = ({tag}) => {
   const { centerWidth } = useContext(DataContext);
 
   let columCount;
@@ -13,10 +13,11 @@ const SearchCard = () => {
     columCount = `0 0 31%`;
   }
   return (
-    <div className="search__card" style={{ flex: columCount }}>
-      <div className="search__card-text">Music</div>
+    <div className="search__card" style={{ flex: columCount,backgroundColor:tag.tagBgcolour
+    }}>
+      <div className="search__card-text">{tag.tagName}</div>
       <div className="search__card-image">
-        <img src="https://via.placeholder.com/100" />
+        <img src={tag.tagImage_url} />
       </div>
     </div>
   );
