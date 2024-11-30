@@ -14,7 +14,7 @@ const ArtistAlbums = () => {
       setAlbumData(response.data.artist);
     };
     fetchArtistData();
-  },[params]);
+  }, [params]);
 
   return (
     <div className="album-container">
@@ -24,7 +24,9 @@ const ArtistAlbums = () => {
         name={albumData?.artistname}
         bgcolour={albumData?.artistbgcolour}
       />
-      <ArtistTable data={albumData?.composedsongs}/>
+      <ArtistTable
+        data={albumData?.composedsongs}
+      />
     </div>
   );
 };

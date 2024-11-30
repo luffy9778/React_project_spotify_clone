@@ -23,6 +23,7 @@ import AddPlaylist from "./pages/Admin/playlist/AddPlaylist";
 import EditPlayList from "./pages/Admin/playlist/EditPlayList";
 import ViewAllPlaylist from "./pages/ViewAllPlaylist";
 import PlaylistAlbum from "./pages/PlaylistAlbum";
+import LikedSongsAlbum from "./pages/LikedSongsAlbum";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
               <Route path="/musics" element={<MusicPage />} />
               <Route path="/podcasts" element={<PodcastContainer />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/likedsongs" element={<Search />} />
+              <Route path="/likedsongs" element={<LikedSongsAlbum />} />
               <Route path="/section" element={<ViewAllPlaylist />} />
               <Route path="/artist/:id" element={<ArtistAlbums />} />
               <Route path="/playlist/:id" element={<PlaylistAlbum />} />

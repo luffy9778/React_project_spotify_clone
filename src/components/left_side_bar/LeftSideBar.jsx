@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import LeftListComponent from "./LeftListComponent";
 
-import { leftData } from "../../dummyData";
+// import { leftData } from "../../dummyData";
 import UserContext from "../../context/UserContext";
 
 const LeftSideBar = ({ leftWidth }) => {
@@ -17,9 +17,6 @@ const LeftSideBar = ({ leftWidth }) => {
   const likedSongs = userData.likedSongs;
   const artists = userData.artists;
   const playlists = userData.playlist;
-
-  console.log(likedSongs, artists, playlists);
-
   const content =
     leftWidth == 90 ? (
       <section className="lsidebar-component">
@@ -47,10 +44,12 @@ const LeftSideBar = ({ leftWidth }) => {
           {likedSongs?.length > 0 ? (
             <LeftListComponent
               key={"liked"}
-              // id={///////}
+              id={"liked"}
               type={"liked"}
               name={"Liked Songs"}
-              image={"https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"}
+              image={
+                "https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"
+              }
               leftWidth={leftWidth}
             />
           ) : null}
@@ -133,8 +132,11 @@ const LeftSideBar = ({ leftWidth }) => {
               key={"liked"}
               // id={///////}
               type={"liked"}
+              length={likedSongs?.length}
               name={"Liked Songs"}
-              image={"https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"}
+              image={
+                "https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg"
+              }
               leftWidth={leftWidth}
             />
           ) : null}
@@ -150,7 +152,7 @@ const LeftSideBar = ({ leftWidth }) => {
                 />
               ))
             : null}
-            {/* {artists?.length > 0
+          {/* {artists?.length > 0
             ? artists.map((i) => (
                 <LeftListComponent
                   key={i._id}

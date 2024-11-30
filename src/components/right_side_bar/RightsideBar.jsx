@@ -1,6 +1,7 @@
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import {
   faCircleCheck,
+  faCirclePlus,
   faEllipsis,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +9,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import CreditsList from "./CreditsList";
 import DataContext from "../../context/DataContext";
+import UserContext from "../../context/UserContext";
 
 const RightsideBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { handleRightSidebarClose }=useContext(DataContext)
+  const { currentSong,userData,addLikedSong } = useContext(UserContext);
+  const likedSongs = userData.likedSongs;
+
+
   return (
     <div
       className="rsidebar-component"
@@ -34,12 +40,12 @@ const RightsideBar = () => {
       </div>
       <div className="rsidebar-body-section">
         <div className="rsidebar-image-container">
-          <img src="https://placehold.co/250x250/orange/white" alt="" />
+          <img src={currentSong?.songimage_url} alt="" />
         </div>
         <div className="rsisebar-song-details-container">
           <div className="rsisebar-song-details">
-            <h2 className="rsisebar-song-name">Nenjakame</h2>
-            <p className="rsisebar-song-artist">Shankar Mahadevan</p>
+            <h2 className="rsisebar-song-name capitalize">{currentSong?.songname}</h2>
+            <p className="rsisebar-song-artist">{currentSong?.artistname.artistname}</p>
           </div>
           <div className="rsisebar-song-details-iconset">
             <div
@@ -49,7 +55,16 @@ const RightsideBar = () => {
               <FontAwesomeIcon icon={faCopy} />
             </div>
             <div className="rsisebar-song-details-addicon">
-              <FontAwesomeIcon icon={faCircleCheck} />
+            {likedSongs?.find((x) => x._id === currentSong?._id) ? (
+            <FontAwesomeIcon icon={faCircleCheck} />
+          ) : (
+            <FontAwesomeIcon
+              icon={faCirclePlus}
+              className="text-white"
+              onClick={() => addLikedSong(currentSong._id)}
+            />
+          )}
+              {/* <FontAwesomeIcon icon={faCircleCheck} /> */}
             </div>
           </div>
         </div>

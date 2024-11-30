@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import AlbumHeaderIconSet from "./AlbumHeaderIconSet";
+import UserContext from "../../context/UserContext";
 
-const AlbumHeader = ({ type, image, name,bgcolour }) => {
+const AlbumHeader = ({ type, image, name, bgcolour }) => {
+  const { userData } = useContext(UserContext);
+  console.log(userData);
   return (
-    <div style={{background:`linear-gradient(180deg, ${bgcolour} 0%, rgba(18,18,18,1) 100%)`}}>
+    <div
+      style={{
+        background: `linear-gradient(180deg, ${bgcolour} 0%, rgba(18,18,18,1) 100%)`,
+      }}
+    >
       <div className="album__header">
         <div
           className="album__header-image"
@@ -30,10 +37,19 @@ const AlbumHeader = ({ type, image, name,bgcolour }) => {
             <div className="album__header-subtext">
               <span>3,295,794</span> monthly listeners
             </div>
-          )}{" "}
+          )}
+          {type === "Liked" && (
+            <div>
+              <span className="font-extrabold">{userData.username} </span>{" "}
+              <span className="text-slate-300 text-sm">
+                • {userData.likedSongs?.length} song
+                {userData.likedSongs?.length > 1 ? "s" : ""}
+              </span>
+            </div>
+          )}
         </div>
       </div>
-      <AlbumHeaderIconSet />
+      <AlbumHeaderIconSet type={type} />
     </div>
   );
 };

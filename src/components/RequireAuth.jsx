@@ -4,7 +4,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useContext(AuthContext);
-  console.log(auth)
   return (
     auth?.roles?.find((role) => allowedRoles?.includes(role)) ?
     <Outlet />

@@ -3,11 +3,13 @@ import {
   faAngleUp,
   faBackwardStep,
   faBars,
+  faCircleCheck,
   faCirclePlus,
   faComputer,
   faForwardStep,
   faMicrophoneLines,
   faMinimize,
+  faPause,
   faPlay,
   faRadio,
   faRepeat,
@@ -18,6 +20,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import DataContext from "../context/DataContext";
+import UserContext from "../context/UserContext";
 
 const Footer = () => {
   const [isImgHovered, setIsImgHovered] = useState(false);
@@ -27,6 +30,20 @@ const Footer = () => {
     setRightWidth,
     rightWidth,
   } = useContext(DataContext);
+
+  const {
+    currentSong,
+    pause,
+    play,
+    isPlaying,
+    songDuration,
+    songCurrentTime,
+    userData,
+    addLikedSong,
+  } = useContext(UserContext);
+
+  const likedSongs = userData.likedSongs;
+  const seekwidth = (songCurrentTime / songDuration) * 100;
 
   const handleArrowClick = () => {
     setIsRightSideBarColsed((prv) => !prv);
@@ -53,14 +70,25 @@ const Footer = () => {
           >
             {showRightSideBarIcon}
           </div>
-          <img src="https://via.placeholder.com/100" alt="song-image" />
+          <img src={currentSong?.songimage_url} alt="song-image" />
         </div>
         <div>
-          <div className="footer-song-name">Nenjakame</div>
-          <div className="footer-song-artists">Shankar Mahadevan,</div>
+          <div className="footer-song-name capitalize">
+            {currentSong?.songname}
+          </div>
+          <div className="footer-song-artists capitalize">
+            {currentSong?.artistname.artistname}
+          </div>
         </div>
         <div className="footer-song-addIcon">
-          <FontAwesomeIcon icon={faCirclePlus} />
+          {likedSongs?.find((x) => x._id === currentSong?._id) ? (
+            <FontAwesomeIcon icon={faCircleCheck} className="text-green-500" />
+          ) : (
+            <FontAwesomeIcon
+              icon={faCirclePlus}
+              onClick={() => addLikedSong(currentSong._id)}
+            />
+          )}
         </div>
       </div>
       <div className="footer-controls-component">
@@ -72,7 +100,11 @@ const Footer = () => {
             <FontAwesomeIcon icon={faBackwardStep} />
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faPlay} />
+            {isPlaying &&currentSong? (
+              <FontAwesomeIcon icon={faPause} onClick={() => pause()} />
+            ) : (
+              <FontAwesomeIcon icon={faPlay} onClick={() => play()} />
+            )}
           </div>
           <div className="footer-conrols-icon">
             <FontAwesomeIcon icon={faForwardStep} />
@@ -82,11 +114,19 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-control-seekbar-container">
-          <span>0:00</span>
+          <span>
+            {Math.floor(songCurrentTime / 60)}:
+            {Math.floor(songCurrentTime % 60)}
+          </span>
           <div className="footer-control-seekbar">
-            <div className="footer-control-seekbar-grow"></div>
+            <div
+              className="footer-control-seekbar-grow"
+              style={{ width: `${seekwidth}%` }}
+            ></div>
           </div>
-          <span>0:00</span>
+          <span>
+            {Math.floor(songDuration / 60)}:{Math.floor(songDuration % 60)}
+          </span>
         </div>
       </div>
       <div className="footer-icon-component">

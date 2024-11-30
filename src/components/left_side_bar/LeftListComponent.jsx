@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const LeftListComponent = ({ id, image, name, leftWidth, type }) => {
+const LeftListComponent = ({ id, image, name, leftWidth, type, length }) => {
   const navigate = useNavigate();
   const border_Radius = type === "Artist" ? "50%" : "5px";
-
   const listType_content =
     type === "liked" ? (
       <>
@@ -14,7 +13,7 @@ const LeftListComponent = ({ id, image, name, leftWidth, type }) => {
           <FontAwesomeIcon icon={faThumbtack} className="pinIcon" />
         </span>
         Playlist
-        <span> . 51 songs</span>
+        <span> • {length} song{length>1?"s":""}</span>
       </>
     ) : (
       type
@@ -24,7 +23,9 @@ const LeftListComponent = ({ id, image, name, leftWidth, type }) => {
     leftWidth === 90 ? (
       <div
         className="left-sidebar__list-component-small"
-        onClick={() => navigate(`/artist/${id}`)}
+        onClick={() =>
+          type === "liked" ? navigate(`/likedsongs`) : navigate(`/artist/${id}`)
+        }
       >
         <div
           className="left-sidebar__list-image"
@@ -36,7 +37,9 @@ const LeftListComponent = ({ id, image, name, leftWidth, type }) => {
     ) : (
       <div
         className="left-sidebar__list-component"
-        onClick={() => navigate(`/artist/${id}`)}
+        onClick={() =>
+          type === "liked" ? navigate(`/likedsongs`) : navigate(`/artist/${id}`)
+        }
       >
         <div
           className="left-sidebar__list-image"

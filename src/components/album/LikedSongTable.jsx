@@ -1,13 +1,10 @@
-import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { faCircleCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext } from "react";
-import UserContext from "../../context/UserContext";
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useContext } from 'react'
+import UserContext from '../../context/UserContext';
 
-const PlaylistTable = ({ data }) => {
-  const { setCurrentSong, setIsPlaying, userData, addLikedSong } =
-    useContext(UserContext);
-  const likedSongs = userData.likedSongs;
+const LikedSongTable = ({data}) => {
+  const { setCurrentSong, setIsPlaying ,setLocal} = useContext(UserContext);
 
   return (
     <div className="px-10 w-full">
@@ -29,6 +26,7 @@ const PlaylistTable = ({ data }) => {
                 <div
                   onClick={() => {
                     setCurrentSong(i);
+                    setLocal(i)
                     setIsPlaying((prv) => !prv);
                   }}
                 >
@@ -46,18 +44,6 @@ const PlaylistTable = ({ data }) => {
               </td>
               <td className="capitalize flex py-5  justify-between ">
                 <div>{i.artistname.artistname}</div>
-                {likedSongs?.find((x) => x._id === i._id) ? (
-                  <span className="items-center text-green-500">
-                    <FontAwesomeIcon icon={faCircleCheck} />{" "}
-                  </span>
-                ) : (
-                  <span
-                    className="opacity-0  items-center group-hover:opacity-100"
-                    onClick={() => addLikedSong(i._id)}
-                  >
-                    <FontAwesomeIcon icon={faCirclePlus} />
-                  </span>
-                )}
               </td>
               <td className="text-center rounded-tr-2xl  rounded-br-2xl ">
                 2:55
@@ -67,7 +53,7 @@ const PlaylistTable = ({ data }) => {
         })}
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default PlaylistTable;
+export default LikedSongTable
