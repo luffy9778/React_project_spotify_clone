@@ -1,10 +1,10 @@
-import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react'
-import UserContext from '../../context/UserContext';
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useContext } from "react";
+import UserContext from "../../context/UserContext";
 
-const LikedSongTable = ({data}) => {
-  const { setCurrentSong, setIsPlaying ,setLocal} = useContext(UserContext);
+const LikedSongTable = ({ data }) => {
+  const { setCurrentSong, setIsPlaying, setLocal } = useContext(UserContext);
 
   return (
     <div className="px-10 w-full">
@@ -26,7 +26,7 @@ const LikedSongTable = ({data}) => {
                 <div
                   onClick={() => {
                     setCurrentSong(i);
-                    setLocal(i)
+                    setLocal(i);
                     setIsPlaying((prv) => !prv);
                   }}
                 >
@@ -53,7 +53,7 @@ const LikedSongTable = ({data}) => {
         })}
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default LikedSongTable
+export default LikedSongTable;

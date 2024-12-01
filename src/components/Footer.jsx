@@ -100,7 +100,7 @@ const Footer = () => {
             <FontAwesomeIcon icon={faBackwardStep} />
           </div>
           <div className="footer-conrols-icon">
-            {isPlaying &&currentSong? (
+            {isPlaying && currentSong ? (
               <FontAwesomeIcon icon={faPause} onClick={() => pause()} />
             ) : (
               <FontAwesomeIcon icon={faPlay} onClick={() => play()} />

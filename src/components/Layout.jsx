@@ -7,33 +7,35 @@ import RightsideBar from "./right_side_bar/RightsideBar";
 import Footer from "./Footer";
 import UserContext from "../context/UserContext";
 
-
 const Layout = () => {
   const [isHoveredLeft, setIsHoveredLeft] = useState(false);
   const [isActiveLeft, setIsActiveLeft] = useState(false);
   const [isHoveredRight, setIsHoveredRight] = useState(false);
   const [isActiveRight, setIsActiveRight] = useState(false);
 
-  const { leftWidth, rightWidth,isRightSideBarColsed,  setRightWidth,setLeftWidth  } =
-    useContext(DataContext);
+  const {
+    leftWidth,
+    rightWidth,
+    isRightSideBarColsed,
+    setRightWidth,
+    setLeftWidth,
+  } = useContext(DataContext);
 
-    const {audioRef,currentSong}=useContext(UserContext)
+  const { audioRef, currentSong } = useContext(UserContext);
   const scrollRef = useRef(null);
   const containerRef = useRef(null);
 
+  const { pathname } = useLocation();
+  useEffect(() => {
+    scrollRef.current.scrollTo(0, 0);
+  }, [pathname]);
 
-  const {pathname}=useLocation()
-  useEffect(()=>{
-    scrollRef.current.scrollTo(0,0)
-  },[pathname])
-  
   // const handlescroll = () => {
   //   if (scrollRef.current) {
   //     setScrollposition(scrollRef.current.scrollTop);
   //   }
   // };
 
-  
   //for resize
   const handelMouseMoveLeft = (e) => {
     const newWidth =
@@ -71,7 +73,7 @@ const Layout = () => {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="container" ref={containerRef}>
         <div
           className="left-sidebar-container"
@@ -93,13 +95,13 @@ const Layout = () => {
           </div>
         </div>
         <div
-      className="page-container"
-      ref={scrollRef}
-      // onScroll={handlescroll}
-      style={{ flex: 1, width: `calc(100% - ${leftWidth + rightWidth}px)` }}
-    >
-    <Outlet/>
-    </div>
+          className="page-container"
+          ref={scrollRef}
+          // onScroll={handlescroll}
+          style={{ flex: 1, width: `calc(100% - ${leftWidth + rightWidth}px)` }}
+        >
+          <Outlet />
+        </div>
         <div
           className="right-sidebar-container"
           style={{
@@ -126,8 +128,12 @@ const Layout = () => {
       </div>
       <Footer />
 
-      <audio ref={audioRef} src={currentSong?.songfile_url} preload="auto" autoPlay></audio>
-
+      <audio
+        ref={audioRef}
+        src={currentSong?.songfile_url}
+        preload="auto"
+        autoPlay
+      ></audio>
     </>
   );
 };

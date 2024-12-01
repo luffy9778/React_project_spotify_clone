@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosPrivate from "../../../api/axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const AddSong = () => {
   const [songName, setSongName] = useState("");
@@ -8,6 +8,8 @@ const AddSong = () => {
   const [song, setSong] = useState("");
   const [image, setImage] = useState("");
   const [tags, setTags] = useState("");
+
+  const axiosPrivate = useAxiosPrivate();
 
   // console.log(songName,artistName,bgColour,song,image,tags)
 
@@ -55,38 +57,38 @@ const AddSong = () => {
     );
   });
 
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-      try {
-        const response = await axiosPrivate.post(
-          "/songs/upload",
-          {
-            songname: songName,
-            songtags: tags,
-            artistname: artistName,
-            bgcolour: bgColour,
-            image,
-            song,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.post(
+        "/songs/upload",
+        {
+          songname: songName,
+          songtags: tags,
+          artistname: artistName,
+          bgcolour: bgColour,
+          image,
+          song,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
           },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response,"d")
-        alert("Song uploaded successfully");
-        setArtistName("")
-        setSongName("")
-        setBgColour("")
-        setImage("")
-        setSong("")
-        setTags("")
-      } catch (err) {
-        console.log(err);
-      }
-    };
- 
+        }
+      );
+      console.log(response, "d");
+      alert("Song uploaded successfully");
+      setArtistName("");
+      setSongName("");
+      setBgColour("");
+      setImage("");
+      setSong("");
+      setTags("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className=" bg-white text-black">
       <h1>Add Song</h1>
@@ -97,27 +99,30 @@ const AddSong = () => {
           value={songName}
           onChange={(e) => setSongName(e.target.value)}
         />
-<br/>
+        <br />
         <label>bgColour</label>
-        <input type="color" value={bgColour} 
-        onChange={(e) => setBgColour(e.target.value)} />
-<br/>
+        <input
+          type="color"
+          value={bgColour}
+          onChange={(e) => setBgColour(e.target.value)}
+        />
+        <br />
         <select onChange={(e) => setArtistName(e.target.value)}>
           <option>select-artist</option>
           {artistOptions}
         </select>
-        <br/>
+        <br />
         <select onChange={(e) => setTags(e.target.value)}>
           <option>select-tags</option>
           {tagsOptions}
         </select>
-        <br/>
+        <br />
         <label htmlFor="">select Image</label>
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <br/>
+        <br />
         <label htmlFor="">select audio</label>
         <input type="file" onChange={(e) => setSong(e.target.files[0])} />
-        <br/>
+        <br />
         <button>addSong</button>
       </form>
     </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axiosPrivate from "../../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
@@ -7,6 +6,7 @@ import {
   faPlay,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const AddPlaylist = () => {
   const [palylistname, setPlaylistName] = useState("");
@@ -15,14 +15,16 @@ const AddPlaylist = () => {
   const [image, setImage] = useState(null);
   const [song, setSong] = useState([]);
   const [songAddStatus, setSongAddStatus] = useState(false);
-  console.log(playlistbgcolour,palylistname,playlisttags,image,song)
+  console.log(playlistbgcolour, palylistname, playlisttags, image, song);
+
+  const axiosPrivate = useAxiosPrivate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosPrivate.post(
         "/playlist/upload",
-        { palylistname,playlistbgcolour,playlisttags,songs:song, image },
+        { palylistname, playlistbgcolour, playlisttags, songs: song, image },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -33,8 +35,8 @@ const AddPlaylist = () => {
       setPlaylistName("");
       setBgColour("");
       setImage(null);
-      setSong([])
-      setPlaylistTags("")
+      setSong([]);
+      setPlaylistTags("");
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +45,7 @@ const AddPlaylist = () => {
   //for song list
 
   const [data, setData] = useState([]);
-  console.log(data)
+  console.log(data);
   const [isHovered, setIsHovered] = useState(false);
 
   const [playingSong, setPlayingSong] = useState(null);
@@ -70,7 +72,6 @@ const AddPlaylist = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -84,7 +85,7 @@ const AddPlaylist = () => {
   }, []);
 
   const addSong = (id) => {
-    console.log(id)
+    console.log(id);
     setSong((prv) => {
       if (prv.includes(id)) {
         setSongAddStatus(false);
@@ -112,15 +113,21 @@ const AddPlaylist = () => {
             type="color"
             value={playlistbgcolour}
             onChange={(e) => setBgColour(e.target.value)}
-          /> 
-          <select 
-            value={playlisttags} 
-            onChange={(e)=>setPlaylistTags(e.target.value)}
+          />
+          <select
+            value={playlisttags}
+            onChange={(e) => setPlaylistTags(e.target.value)}
             className="bg-transparent focus:bg-transparent"
-            >
-            <option value="" className="bg-slate-700">--select--</option>
-            <option value="Malyalam" className="bg-slate-700">Malyalam</option>
-            <option value="Tamil" className="bg-slate-700">Tamil</option>
+          >
+            <option value="" className="bg-slate-700">
+              --select--
+            </option>
+            <option value="Malyalam" className="bg-slate-700">
+              Malyalam
+            </option>
+            <option value="Tamil" className="bg-slate-700">
+              Tamil
+            </option>
           </select>
           <label>playlist image</label>
           <input type="file" onChange={(e) => setImage(e.target.files[0])} />
@@ -165,12 +172,12 @@ const AddPlaylist = () => {
                       src={song.songimage}
                       className="w-11 h-11 rounded-md mr-4"
                     />
-                    {song.songname} 
+                    {song.songname}
                   </div>
                 </td>
-                <td className="w-3/12 text-start">{song.artistname.artistname
-}
-</td>
+                <td className="w-3/12 text-start">
+                  {song.artistname.artistname}
+                </td>
                 <td className="w-2/12 text-center">
                   <div onClick={() => addSong(song._id)}>
                     {songAddStatus ? (

@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import axiosPrivate from "../../../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const EditArtist = () => {
   const [artistname, setArtistName] = useState("");
   const [bgColour, setBgcolour] = useState("");
   const [image, setImage] = useState(null);
-console.log(artistname,bgColour,image)
+  console.log(artistname, bgColour, image);
 
-  const {id}=useParams()
-  console.log(id)
-  const navigate=useNavigate()
+  const axiosPrivate = useAxiosPrivate();
+
+  const { id } = useParams();
+  console.log(id);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getArtist = async () => {
       try {
         const response = await axiosPrivate.get(`/artist/${id}`);
         console.log(response.data);
-        setArtistName(response.data.artist.artistname)
-        setBgcolour(response.data.artist.artistbgcolour)
-        setImage(response.data.artist.artistimage_Url)
+        setArtistName(response.data.artist.artistname);
+        setBgcolour(response.data.artist.artistbgcolour);
+        setImage(response.data.artist.artistimage_Url);
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +45,7 @@ console.log(artistname,bgColour,image)
       setArtistName("");
       setBgcolour("");
       setImage(null);
-      navigate("Admin/artist")
+      navigate("Admin/artist");
     } catch (error) {
       console.log(error);
     }
@@ -70,10 +72,11 @@ console.log(artistname,bgColour,image)
           onChange={(e) => setBgcolour(e.target.value)}
         />
         <label>Profile Picture</label>
-        <input 
-          type="file"  
+        <input
+          type="file"
           onChange={(e) => setImage(e.target.files[0])}
-          required />
+          required
+        />
         <button className="bg-green-600">create Artist</button>
       </form>
     </div>

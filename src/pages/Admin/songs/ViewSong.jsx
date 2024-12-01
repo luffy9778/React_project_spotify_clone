@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axiosPrivate from "../../../api/axios";
 import SongList from "./SongList";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const ViewSong = () => {
+  const axiosPrivate = useAxiosPrivate();
+
   const [data, setData] = useState([]);
 
   const [playingSong, setPlayingSong] = useState(null);
@@ -25,21 +27,18 @@ const ViewSong = () => {
   //   }
   // };
 
-
-const playSong=(song)=>{
-  if(playSong===song){
-    
-  }
- setPlayingSong(song)
-}
-
+  const playSong = (song) => {
+    if (playSong === song) {
+    }
+    setPlayingSong(song);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosPrivate.get("/songs");
         setData(response.data.songs);
-        console.log(data ,"data");
+        console.log(data, "data");
       } catch (error) {
         console.log(error);
       }
@@ -61,12 +60,17 @@ const playSong=(song)=>{
         <tbody>
           {data.map((song, index) => (
             // <SongList song={song} index={index} togglePlay={togglePlay} playingSong={playingSong}/>
-            <SongList song={song} index={index} playSong={playSong} playingSong={playingSong}/>
+            <SongList
+              song={song}
+              index={index}
+              playSong={playSong}
+              playingSong={playingSong}
+            />
           ))}
         </tbody>
       </table>
 
-      <audio src={playingSong?.songfile_url} controls autoPlay/>
+      <audio src={playingSong?.songfile_url} controls autoPlay />
     </div>
   );
 };

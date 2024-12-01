@@ -13,10 +13,9 @@ import UserContext from "../../context/UserContext";
 
 const RightsideBar = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const { handleRightSidebarClose }=useContext(DataContext)
-  const { currentSong,userData,addLikedSong } = useContext(UserContext);
+  const { handleRightSidebarClose } = useContext(DataContext);
+  const { currentSong, userData, addLikedSong } = useContext(UserContext);
   const likedSongs = userData.likedSongs;
-
 
   return (
     <div
@@ -44,8 +43,12 @@ const RightsideBar = () => {
         </div>
         <div className="rsisebar-song-details-container">
           <div className="rsisebar-song-details">
-            <h2 className="rsisebar-song-name capitalize">{currentSong?.songname}</h2>
-            <p className="rsisebar-song-artist">{currentSong?.artistname.artistname}</p>
+            <h2 className="rsisebar-song-name capitalize">
+              {currentSong?.songname}
+            </h2>
+            <p className="rsisebar-song-artist">
+              {currentSong?.artistname.artistname}
+            </p>
           </div>
           <div className="rsisebar-song-details-iconset">
             <div
@@ -55,15 +58,15 @@ const RightsideBar = () => {
               <FontAwesomeIcon icon={faCopy} />
             </div>
             <div className="rsisebar-song-details-addicon">
-            {likedSongs?.find((x) => x._id === currentSong?._id) ? (
-            <FontAwesomeIcon icon={faCircleCheck} />
-          ) : (
-            <FontAwesomeIcon
-              icon={faCirclePlus}
-              className="text-white"
-              onClick={() => addLikedSong(currentSong._id)}
-            />
-          )}
+              {likedSongs?.find((x) => x._id === currentSong?._id) ? (
+                <FontAwesomeIcon icon={faCircleCheck} />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCirclePlus}
+                  className="text-white"
+                  onClick={() => addLikedSong(currentSong._id)}
+                />
+              )}
               {/* <FontAwesomeIcon icon={faCircleCheck} /> */}
             </div>
           </div>

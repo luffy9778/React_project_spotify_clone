@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axiosPrivate from "../../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const ViewArtist = () => {
   const [data, setData] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
   console.log(data);
 
@@ -39,13 +40,18 @@ const ViewArtist = () => {
                     src={i.artistimage_Url}
                     className="w-11 h-11 rounded-md mr-4"
                   />
-                  <Link to={`/admin/artist/${i._id}`} className="hover:underline">
+                  <Link
+                    to={`/admin/artist/${i._id}`}
+                    className="hover:underline"
+                  >
                     {i.artistname}
                   </Link>
                 </div>
               </td>
               <td className="w-2/12 text-center">
-               <Link to={`/admin/artist/edit/${i._id}`}><FontAwesomeIcon icon={faEdit}/></Link> 
+                <Link to={`/admin/artist/edit/${i._id}`}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Link>
               </td>
             </tr>
           ))}
