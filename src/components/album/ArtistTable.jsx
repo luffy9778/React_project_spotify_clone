@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 
 const ArtistTable = ({ data }) => {
-  const { setCurrentSong, setIsPlaying, addLikedSong, userData } =
+  const { setCurrentSong, setIsPlaying, addLikedSong, userData,setLocal,setCurrentIndex,setSongList } =
     useContext(UserContext);
   const likedSongs = userData.likedSongs;
   return (
@@ -20,6 +20,9 @@ const ArtistTable = ({ data }) => {
                     setIsPlaying(false);
                     setCurrentSong(i);
                     setIsPlaying(true);
+                    setSongList(data)
+                    setCurrentIndex(index)
+                    setLocal(i)
                   }}
                 >
                   {index + 1}

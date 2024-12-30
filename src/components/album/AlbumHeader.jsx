@@ -4,7 +4,6 @@ import UserContext from "../../context/UserContext";
 
 const AlbumHeader = ({ type, image, name, bgcolour }) => {
   const { userData } = useContext(UserContext);
-  console.log(userData);
   return (
     <div
       style={{

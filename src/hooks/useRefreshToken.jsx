@@ -10,7 +10,7 @@ const useRefreshToken = () => {
             "http://localhost:3500/auth/refresh",
             { withCredentials: true }
           );
-          // console.log(response.data)
+          console.log("refreshtoken")
           setAuth(prv=>{
             return {...prv,
             accessToken:response.data.accessToken,

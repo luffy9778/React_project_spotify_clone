@@ -40,10 +40,21 @@ const Footer = () => {
     songCurrentTime,
     userData,
     addLikedSong,
+    // audioRef,
+    next,
+    previous,
+    isShuffle,
+    setIsShuffle,
   } = useContext(UserContext);
 
   const likedSongs = userData.likedSongs;
   const seekwidth = (songCurrentTime / songDuration) * 100;
+
+  // const handleVolume = (e) => {
+  //   const newVolume = Number(e.target.value)
+  //   console.log(newVolume);
+  //   audioRef.current.volume = newVolume;
+  // };
 
   const handleArrowClick = () => {
     setIsRightSideBarColsed((prv) => !prv);
@@ -94,10 +105,14 @@ const Footer = () => {
       <div className="footer-controls-component">
         <div className="footer-controls-icon-container">
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faShuffle} />
+            <FontAwesomeIcon
+              icon={faShuffle}
+              onClick={() => setIsShuffle((prv) => !prv)}
+              style={{ color: isShuffle && "rgb(71, 211, 71)" }}
+            />
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faBackwardStep} />
+            <FontAwesomeIcon icon={faBackwardStep} onClick={() => previous()} />
           </div>
           <div className="footer-conrols-icon">
             {isPlaying && currentSong ? (
@@ -107,7 +122,7 @@ const Footer = () => {
             )}
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faForwardStep} />
+            <FontAwesomeIcon icon={faForwardStep} onClick={() => next()} />
           </div>
           <div className="footer-conrols-icon">
             <FontAwesomeIcon icon={faRepeat} />
@@ -145,6 +160,15 @@ const Footer = () => {
         <div className="footer-icon-component-icons">
           <FontAwesomeIcon icon={faVolumeHigh} />
         </div>
+        {/* <div >
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            onChange={handleVolume}
+          />
+        </div> */}
         <div className="footer-icon-component-volumebar">
           <div className="footer-icon-component-volumebar-grow"></div>
           <div className="footer-icon-component-volumebar-end"></div>

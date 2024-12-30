@@ -5,8 +5,15 @@ import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 
 const PlaylistTable = ({ data }) => {
-  const { setCurrentSong, setIsPlaying, userData, addLikedSong } =
-    useContext(UserContext);
+  const {
+    setCurrentSong,
+    setIsPlaying,
+    userData,
+    addLikedSong,
+    setLocal,
+    setSongList,
+    setCurrentIndex,
+  } = useContext(UserContext);
   const likedSongs = userData.likedSongs;
 
   return (
@@ -28,8 +35,12 @@ const PlaylistTable = ({ data }) => {
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
                 <div
                   onClick={() => {
+                    setIsPlaying(false);
                     setCurrentSong(i);
-                    setIsPlaying((prv) => !prv);
+                    setIsPlaying(true);
+                    setSongList(data);
+                    setCurrentIndex(index);
+                    setLocal(i);
                   }}
                 >
                   {index + 1}

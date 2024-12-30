@@ -10,5 +10,4 @@ const VisitedListContainer = ({setBgColor}) => {
     </div>
   );
 };
-
 export default VisitedListContainer;
