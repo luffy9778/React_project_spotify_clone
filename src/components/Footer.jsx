@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import DataContext from "../context/DataContext";
 import UserContext from "../context/UserContext";
+// import useUser from "../hooks/useUser";
 
 const Footer = () => {
   const [isImgHovered, setIsImgHovered] = useState(false);
@@ -38,15 +39,15 @@ const Footer = () => {
     isPlaying,
     songDuration,
     songCurrentTime,
-    userData,
     addLikedSong,
     // audioRef,
     next,
     previous,
     isShuffle,
     setIsShuffle,
+    userData
   } = useContext(UserContext);
-
+// const userData=useUser()
   const likedSongs = userData.likedSongs;
   const seekwidth = (songCurrentTime / songDuration) * 100;
 

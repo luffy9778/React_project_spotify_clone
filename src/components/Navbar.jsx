@@ -10,29 +10,30 @@ import {
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import LogoutCotainer from "./LogoutCotainer";
+import SearchContext from "../context/SearchContext";
 
 const Navbar = () => {
-
   const [isSerchHovered, setIsSerchHovered] = useState(false);
-  const [showLogut,setShowLogout]=useState(false)
+  const [showLogut, setShowLogout] = useState(false);
 
-  const {auth}=useContext(AuthContext)
+  const { auth } = useContext(AuthContext);
+  const { query, setQuery } = useContext(SearchContext);
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
     <nav>
       <div className="nav-app-logo">
         <FontAwesomeIcon icon={faSpotify} />
       </div>
       <div className="nav-items">
-        <div className="nav-home-icon" onClick={()=>navigate("/")}>
+        <div className="nav-home-icon" onClick={() => navigate("/")}>
           <FontAwesomeIcon icon={faHouse} />
         </div>
         <div
           className="nav-searchbar-container"
           onMouseEnter={() => setIsSerchHovered(true)}
           onMouseLeave={() => setIsSerchHovered(false)}
-          onClick={()=>navigate("/search")}
+          onClick={() => navigate("/search")}
           style={{
             backgroundColor: isSerchHovered
               ? "rgb(35, 35, 35)"
@@ -47,6 +48,8 @@ const Navbar = () => {
             type="text"
             className="nav-searchbar"
             placeholder="What do you want to play?"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             style={{
               backgroundColor: isSerchHovered
                 ? "rgb(35, 35, 35)"
@@ -70,11 +73,12 @@ const Navbar = () => {
         <div className="nav-notification-icon-container">
           <FontAwesomeIcon icon={faBell} className="nav-notification-icon" />
         </div>
-        <div className="nav-user-icon-container" onClick={()=>setShowLogout(prv=>!prv)}>
-          <div className="nav-user-icon">
-            {auth?.user.slice(0,1)}
-            </div>
-            {showLogut&&<LogoutCotainer/>}
+        <div
+          className="nav-user-icon-container"
+          onClick={() => setShowLogout((prv) => !prv)}
+        >
+          <div className="nav-user-icon">{auth?.user.slice(0, 1)}</div>
+          {showLogut && <LogoutCotainer />}
         </div>
       </div>
     </nav>

@@ -11,6 +11,7 @@ const LogoutCotainer = () => {
                 {withCredentials: true}
             )
             setAuth({})
+            // localStorage.clear()
         } catch (error) {
             console.log(error)
         }

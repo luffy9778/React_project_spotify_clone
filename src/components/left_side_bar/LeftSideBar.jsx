@@ -8,13 +8,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import LeftListComponent from "./LeftListComponent";
+// import useUser from "../../hooks/useUser";
 
 // import { leftData } from "../../dummyData";
 import UserContext from "../../context/UserContext";
 
 const LeftSideBar = ({ leftWidth }) => {
   const { userData } = useContext(UserContext);
-  const likedSongs = userData.likedSongs;
+  // const  userData = useUser();
+  // console.log(userData)
+  const likedSongs = userData?.likedSongs;
   const artists = userData.artists;
   const playlists = userData.playlist;
   const content =

@@ -6,6 +6,7 @@ import { DataProvider } from "./context/DataContext";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/UserContext";
+import { SearchProvider } from "./context/SearchContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,9 @@ root.render(
       <AuthProvider>
         <DataProvider>
           <UserProvider>
-            <App />
+            <SearchProvider>
+              <App />
+            </SearchProvider>
           </UserProvider>
         </DataProvider>
       </AuthProvider>
