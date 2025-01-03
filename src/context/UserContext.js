@@ -25,42 +25,36 @@ export const UserProvider = ({ children }) => {
   }, [auth]);
 
   //for song
-  const audioRef = useRef();
+  const audioRef = useRef(null);
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songDuration, setSongDuration] = useState(0);
   const [songCurrentTime, setSongCurrentTime] = useState(0);
+
+  const [isLoadedFromLocalStorage, setIsLoadedFromLocalStorage] =
+    useState(false);
 
   //next and previous song
   const [songList, setSongList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
 
-  //for render the audioref for localstorage
-  const [isAudioReady, setIsAudioReady] = useState(false);
-  const [isLoadedFromLocalStorage, setIsLoadedFromLocalStorage] =
-    useState(false);
-  // console.log(songCurrentTime, songDuration);
-
   useEffect(() => {
-    const getLocalSong = JSON.parse(localStorage.getItem("song"));
-    // console.log(audioRef);
+    const getLocalSong = localStorage.getItem("song");
     if (getLocalSong) {
-      setCurrentSong(getLocalSong);
-      // pause()
-      setIsLoadedFromLocalStorage(true);
+      setCurrentSong(JSON.parse(getLocalSong));
+      setIsLoadedFromLocalStorage(true)
     }
+    console.log("getlocal")
   }, []);
 
   useEffect(() => {
-    if (currentSong && audioRef.current) {
-      if (isLoadedFromLocalStorage) {
-        pause();
-        setIsLoadedFromLocalStorage(false);
-      }
-      setIsAudioReady(true);
+    if (isLoadedFromLocalStorage && audioRef.current) {
+      audioRef.current.pause();
+      setIsLoadedFromLocalStorage(false);
     }
-  }, [currentSong, audioRef.current]);
+    console.log("pause effect")
+  }, [audioRef.current]);
 
   const setLocal = (i) => {
     localStorage.setItem("song", JSON.stringify(i));
@@ -73,13 +67,13 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const pause = () => {
+  function pause() {
     if (audioRef.current) {
-      // console.log("paused");
+      console.log("paused");
       audioRef.current.pause();
       setIsPlaying(false);
     }
-  };
+  }
   const next = () => {
     if (songList.length > 0) {
       const nextIndex = isShuffle
@@ -100,34 +94,35 @@ export const UserProvider = ({ children }) => {
       setLocal(songList[nextIndex]);
     }
   };
-
   useEffect(() => {
-    if (isAudioReady && audioRef.current) {
-      const audio = audioRef.current;
-      const handleLoadedMetadata = () => {
-        setSongDuration(audio.duration);
-      };
-      const handleTimeUpdate = () => {
-        setSongCurrentTime(audio.currentTime);
-      };
-      audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.addEventListener("timeupdate", handleTimeUpdate);
-      // console.log("first")
-      return () => {
-        audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-        audio.removeEventListener("timeupdate", handleTimeUpdate);
-      };
-    }
-  }, [currentSong, isAudioReady]);
-  // console.log(audioRef.current)
-  // useEffect(()=>{
-  //   setTimeout(() => {
-  //     audioRef.current.ontimeupdate=()=>{
-  //       setSongCurrentTime(audioRef.current.currentTime)
-  //       setSongDuration(audioRef.current.duration)
-  //     }
-  //   }, 1000);
-  // },[currentSong])
+    // if (isAudioReady && audioRef.current) {
+    //   const audio = audioRef.current;
+    //   const handleLoadedMetadata = () => {
+    //     setSongDuration(audio.duration);
+    //   };
+    //   const handleTimeUpdate = () => {
+    //     setSongCurrentTime(audio.currentTime);
+    //   };
+    //   audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    //   audio.addEventListener("timeupdate", handleTimeUpdate);
+    //   // console.log("first")
+    //   return () => {
+    //     audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+    //     audio.removeEventListener("timeupdate", handleTimeUpdate);
+    //   };
+    // }
+    const audio = audioRef.current;
+    if (!audio || !currentSong) return;
+    const handleMetadata = () => setSongDuration(audio.duration);
+    const handleTimeUpdate = () => setSongCurrentTime(audio.currentTime);
+    audio.addEventListener("loadedmetadata", handleMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    console.log("timeup")
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [currentSong,audioRef.current]);
 
   //liked song
   const addLikedSong = async (id) => {
