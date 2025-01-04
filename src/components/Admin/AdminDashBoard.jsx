@@ -2,6 +2,7 @@ import React from "react";
 import LeftSidePannel from "./LeftSidePannel";
 import { Outlet } from "react-router-dom";
 import AdminFooter from "./AdminFooter";
+import AdminNav from "./AdminNav";
 
 export const AdminDashBoard = () => {
   return (
@@ -10,10 +11,10 @@ export const AdminDashBoard = () => {
         <LeftSidePannel />
       </div>
       <div className="w-10/12 h-screen  bg-black">
-        <div className="h-1/6 bg-green-600"></div>
-        <div className="h-5/6  relative">
+        <AdminNav />
+        <div className="h-5/6 relative">
           <Outlet />
-          <AdminFooter/>
+          <AdminFooter />
         </div>
       </div>
     </div>

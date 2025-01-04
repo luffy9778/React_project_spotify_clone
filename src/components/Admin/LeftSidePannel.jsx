@@ -2,8 +2,10 @@ import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import SidePannalList from "./SidePannalList";
+import { useNavigate } from "react-router-dom";
 
 const LeftSidePannel = () => {
+    const navigate=useNavigate()
   const list = [
     {
       id: 1,
@@ -37,6 +39,7 @@ const LeftSidePannel = () => {
         &nbsp;Spotify
       </div>
       <div className="h-5/6 overflow-y-scroll">
+      <div className=" mb-2 text-xl h-10 pl-5 flex items-center hover:rounded-lg hover:bg-violet-700" onClick={()=>navigate("/Admin")}>Home</div>
         {list.map((i) => (
           <SidePannalList key={i.id} value={i} />
         ))}

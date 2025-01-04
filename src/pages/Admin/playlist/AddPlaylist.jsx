@@ -169,7 +169,7 @@ const AddPlaylist = () => {
                 <td className="w-5/12 py-3">
                   <div className="flex items-center">
                     <img
-                      src={song.songimage}
+                      src={song.songimage_url}
                       className="w-11 h-11 rounded-md mr-4"
                     />
                     {song.songname}
