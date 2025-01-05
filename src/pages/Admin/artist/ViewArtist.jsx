@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const ViewArtist = () => {
   const [data, setData] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-
-  console.log(data);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +22,20 @@ const ViewArtist = () => {
   }, []);
   return (
     <div className="px-6">
+      <div className="flex justify-between pt-3 px-3">
+        <input
+          type="text"
+          placeholder="search songs..."
+          className="rounded-lg h-8 bg-slate-300 pl-3 text-black border focus:border-none"
+        />
+        <button
+          className="bg-green-600 rounded-lg px-3"
+          onClick={() => navigate("/Admin/artist/add")}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          Add
+        </button>
+      </div>
       <table className="w-full">
         <thead>
           <tr className="py-44 border-spacing-0 border-b">
