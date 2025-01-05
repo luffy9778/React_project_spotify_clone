@@ -33,7 +33,6 @@ const ViewSong = () => {
         );
         setData(response.data.songs);
         setTotalPages(response.data.totalPages);
-        console.log(response.data, "data");
       } catch (error) {
         console.log(error);
       }
