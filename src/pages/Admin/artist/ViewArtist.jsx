@@ -10,7 +10,7 @@ const ViewArtist = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
- const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const limit = 4;
@@ -19,7 +19,9 @@ const ViewArtist = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axiosPrivate.get(`/artist?page=${currentPage}&limit=${limit}`);
+        const response = await axiosPrivate.get(
+          `/artist?page=${currentPage}&limit=${limit}`
+        );
         setData(response.data.artists);
         setTotalPages(response.data.totalPages);
       } catch (error) {

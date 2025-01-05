@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import PaginationBar from "../../../components/Admin/PaginationBar";
+import { debounce } from "lodash";
 
 const ViewSong = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -18,6 +19,8 @@ const ViewSong = () => {
   const [loading, setLoading] = useState(false);
   const limit = 4;
 
+  const [query, setQuery] = useState("");
+
   const playSong = (song) => {
     if (playSong === song) {
     }
@@ -28,9 +31,10 @@ const ViewSong = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axiosPrivate.get(
-          `/songs?page=${currentPage}&limit=${limit}`
-        );
+        const endPoint = !query.trim()
+          ? `/songs?page=${currentPage}&limit=${limit}`
+          : `/songs/search?query=${query}&page=${currentPage}&limit=${limit}`;
+        const response = await axiosPrivate.get(endPoint);
         setData(response.data.songs);
         setTotalPages(response.data.totalPages);
       } catch (error) {
@@ -39,7 +43,12 @@ const ViewSong = () => {
       setLoading(false);
     };
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, query]);
+
+  const handleSearch = debounce(async (e) => {
+    setQuery(e.target.value);
+    setCurrentPage(1);
+  }, 500);
 
   return (
     <div className="px-6 h-5/6 relative">
@@ -47,7 +56,8 @@ const ViewSong = () => {
         <input
           type="text"
           placeholder="search songs..."
-          className="rounded-lg h-8 bg-slate-300 pl-3 text-black border focus:border-none"
+          className="rounded-lg h-8 bg-transparent pl-3 text-white border focus:border-none"
+          onChange={handleSearch}
         />
         <button
           className="bg-green-600 rounded-lg px-3"
