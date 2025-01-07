@@ -43,6 +43,7 @@ const LeftSidePannel = () => {
         {list.map((i) => (
           <SidePannalList key={i.id} value={i} />
         ))}
+      <div className=" mb-2 text-xl h-10 pl-5 flex items-center hover:rounded-lg hover:bg-violet-700" onClick={()=>navigate("/Admin/users")}>Users</div>
       </div>
     </>
   );

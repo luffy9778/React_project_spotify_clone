@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import AuthContext from "./AuthContext";
+import { io } from "socket.io-client";
 
 const UserContext = createContext({});
 
@@ -23,6 +24,21 @@ export const UserProvider = ({ children }) => {
     };
     fetchData();
   }, [auth]);
+console.log(userData)
+
+  /////////for soket.io//////////////
+
+ useEffect(()=>{
+  
+  if(auth?.accessToken){
+      const socket = io('http://localhost:3500');
+      console.log("usersoket")
+      socket.emit("userOnline",userData._id)
+      return()=>{
+        socket.disconnect()
+      }
+  }
+},[userData])
 
   //for song
   const audioRef = useRef(null);
@@ -45,7 +61,6 @@ export const UserProvider = ({ children }) => {
       setCurrentSong(JSON.parse(getLocalSong));
       setIsLoadedFromLocalStorage(true)
     }
-    console.log("getlocal")
   }, []);
 
   useEffect(() => {

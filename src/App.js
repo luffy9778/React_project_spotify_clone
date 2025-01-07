@@ -24,6 +24,7 @@ import EditPlayList from "./pages/Admin/playlist/EditPlayList";
 import ViewAllPlaylist from "./pages/ViewAllPlaylist";
 import PlaylistAlbum from "./pages/PlaylistAlbum";
 import LikedSongsAlbum from "./pages/LikedSongsAlbum";
+import ViewUsers from "./pages/Admin/user/ViewUsers";
 
 function App() {
   return (
@@ -58,6 +59,11 @@ function App() {
               </Route>
               <Route path="playlist">
                 <Route index element={<ViewPlaylist />} />
+                <Route path="add" element={<AddPlaylist />} />
+                <Route path="edit" element={<EditPlayList />} />
+              </Route>
+              <Route path="users">
+                <Route index element={<ViewUsers/>} />
                 <Route path="add" element={<AddPlaylist />} />
                 <Route path="edit" element={<EditPlayList />} />
               </Route>
