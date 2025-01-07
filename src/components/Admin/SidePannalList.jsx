@@ -38,14 +38,14 @@ const SidePannalList = ({ value }) => {
             <FontAwesomeIcon icon={faFolderPlus} className="px-2" />
             {value.add.content}
           </div>
-          <div className="h-10 pl-5 flex items-center text-base hover:rounded-lg hover:bg-violet-700"  onClick={()=>navigate(value.edit.path)}>
+          {/* <div className="h-10 pl-5 flex items-center text-base hover:rounded-lg hover:bg-violet-700"  onClick={()=>navigate(value.edit.path)}>
             <FontAwesomeIcon icon={faPenToSquare} className="px-2" />
             {value.edit.content}
           </div>
           <div className="h-10 pl-5 flex items-center text-base hover:rounded-lg hover:bg-violet-700"  onClick={()=>navigate()}>
             <FontAwesomeIcon icon={faTrash} className="px-2" />
             {value.delete}
-          </div>
+          </div> */}
         </>
       )}
     </div>

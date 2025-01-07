@@ -50,7 +50,7 @@ function App() {
               <Route path="songs">
                 <Route index element={<ViewSong />} />
                 <Route path="add" element={<AddSong />} />
-                <Route path="edit/" element={<EditSong />} />
+                <Route path="edit/:id" element={<EditSong />} />
               </Route>
               <Route path="artist">
                 <Route index element={<ViewArtist />} />

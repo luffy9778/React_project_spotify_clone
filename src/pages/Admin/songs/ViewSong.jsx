@@ -64,8 +64,9 @@ const ViewSong = () => {
             <thead>
               <tr className="py-44 border-spacing-0 border-b">
                 <th className="w-2/12 py-4 text-center">#</th>
-                <th className="w-5/12  text-start">Title</th>
-                <th className="w-3/12 text-start">Artist</th>
+                <th className="w-4/12  text-start">Title</th>
+                <th className="w-2/12 text-start">Artist</th>
+                <th className="w-2/12 text-start"></th>
                 <th className="w-2/12 text-start"></th>
               </tr>
             </thead>

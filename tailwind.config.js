@@ -5,6 +5,7 @@ module.exports = {
     "./src/pages/tailwind_linked_pages/**/*.{js,jsx,ts,tsx}",
     "./src/components/album/**/*.{js,jsx,ts,tsx}",
     "./src/components/search/**/*.{js,jsx,ts,tsx}",
+    "./src/components/spinner/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},

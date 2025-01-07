@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlay, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { faPause } from "@fortawesome/free-solid-svg-icons/faPause";
+import axiosPrivate from "../../../api/axios";
 
 const SongList = ({ song, index, playSong, playingSong }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [plyBtn, setPlyBtn] = useState(false);
 
+  const handleDelete=async(id)=>{
+    try {
+      const response=await axiosPrivate.delete(`/songs/${id}`)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <tr
       key={index}
@@ -32,7 +41,7 @@ const SongList = ({ song, index, playSong, playingSong }) => {
           index + 1
         )}
       </td>
-      <td className="w-5/12 py-3">
+      <td className="w-4/12 py-3">
         <div className="flex items-center">
           <img src={song.songimage_url} className="w-11 h-11 rounded-md mr-4" />
           <Link to={`/admin/songs/${song._id}`} className="hover:underline">
@@ -40,9 +49,14 @@ const SongList = ({ song, index, playSong, playingSong }) => {
           </Link>
         </div>
       </td>
-      <td className="w-3/12 text-start">{song.artistname.artistname}</td>
+      <td className="w-2/12 text-start">{song.artistname.artistname}</td>
+      <td className="w-2/12 text-end">
+      <Link to={`/admin/songs/edit/${song._id}`}>
+      <FontAwesomeIcon icon={faEdit}/>
+      </Link>
+      </td>
       <td className="w-2/12 text-center">
-        <FontAwesomeIcon icon={faEdit} />
+      <FontAwesomeIcon icon={faTrash} onClick={()=>handleDelete(song._id)}/>
       </td>
     </tr>
   );
