@@ -3,21 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlay, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { faPause } from "@fortawesome/free-solid-svg-icons/faPause";
-import axiosPrivate from "../../../api/axios";
 
-const SongList = ({ song, index, playSong, playingSong }) => {
+const SongList = ({ song, index, playSong, playingSong,setConfirm }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [plyBtn, setPlyBtn] = useState(false);
 
-  const handleDelete=async(id)=>{
-    try {
-      const response=await axiosPrivate.delete(`/songs/${id}`)
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  
   return (
+    <>
     <tr
       key={index}
       className=" border-spacing-0 border-b"
@@ -56,9 +49,10 @@ const SongList = ({ song, index, playSong, playingSong }) => {
       </Link>
       </td>
       <td className="w-2/12 text-center">
-      <FontAwesomeIcon icon={faTrash} onClick={()=>handleDelete(song._id)}/>
+      <FontAwesomeIcon icon={faTrash} onClick={()=>setConfirm(song._id)}/>
       </td>
     </tr>
+    </>
   );
 };
 

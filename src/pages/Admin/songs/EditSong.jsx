@@ -12,8 +12,6 @@ const EditSong = () => {
   const [imageError, setImageError] = useState("");
   const [tags, setTags] = useState("");
   const [fetchedData, setFetchedData] = useState(false);
-  console.log("fetch", fetchedData);
-  console.log("bgco", bgColour);
 
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
@@ -26,7 +24,6 @@ const EditSong = () => {
   const [artistData, setArtistData] = useState([]);
   const [tagstData, setTagsData] = useState([]);
   const params = useParams();
-  console.log(params);
   useEffect(() => {
     const fetchArtist = async () => {
       try {
@@ -37,7 +34,7 @@ const EditSong = () => {
         setSongName(songname);
         setArtistName(artistname.artistname);
         setBgColour(songbgcolour);
-        console.log(songtags.tagName);
+        // console.log(songtags?.tagName);
         setTags(songtags.tagName);
       } catch (error) {
         console.error(error);
@@ -151,13 +148,11 @@ const EditSong = () => {
     if (song) {
       updatedData.song = song;
     }
-    console.log("updated", updatedData);
     // Check if there's anything to update
     if (Object.keys(updatedData).length === 0) {
       alert("No changes to update.");
       return;
     }
-    console.log("startded uploading");
     setLoading(true);
     setProgress(0);
     try {
@@ -176,7 +171,6 @@ const EditSong = () => {
           },
         }
       );
-      console.log(response, "d");
       alert("Song uploaded successfully");
       setArtistName("");
       setSongName("");

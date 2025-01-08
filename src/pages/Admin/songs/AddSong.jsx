@@ -158,7 +158,7 @@ const AddSong = () => {
 
   return (
     <>
-      {loading && progress && (
+      {/* {loading && progress && (
         <div className="w-full h-full flex items-center justify-center">
           <div className="w-1/3 h-36 flex justify-center ">
             {progress === 100 ? (
@@ -183,7 +183,37 @@ const AddSong = () => {
             )}
           </div>
         </div>
+      )} */}
+
+      {loading && progress && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          {progress === 100 ? (
+            <div className="p-5 pl-10 w-1/3 flex flex-col items-center">
+              <SpinnerTailwind />
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-5 w-1/3 flex flex-col items-center">
+              <span className="text-base font-medium text-blue-700 dark:text-white mb-4">
+                Uploading song...
+              </span>
+              <div className="w-full px-5">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm font-medium text-blue-700 dark:text-white">
+                    {progress}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                  <div
+                    className="bg-blue-600 h-2.5 rounded-full"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       )}
+
       <form className="max-w-3xl mx-auto pt-5" onSubmit={handleSubmit}>
         {/* Heading */}
         <h2 className="text-2xl font-bold  text-gray-900 dark:text-white text-center">
