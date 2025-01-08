@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faPlay, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlay, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { faPause } from "@fortawesome/free-solid-svg-icons/faPause";
 
@@ -49,7 +49,7 @@ const SongList = ({ song, index, playSong, playingSong,setConfirm }) => {
       </Link>
       </td>
       <td className="w-2/12 text-center">
-      <FontAwesomeIcon icon={faTrash} onClick={()=>setConfirm(song._id)}/>
+      <FontAwesomeIcon icon={faTrashCan} onClick={()=>setConfirm(song._id)}/>
       </td>
     </tr>
     </>
