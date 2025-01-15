@@ -9,7 +9,7 @@ const SerchNav = ({handleSearch,nav}) => {
     <div className="flex justify-between pt-3 px-3">
       <input
         type="text"
-        placeholder="search songs..."
+        placeholder={`search ${nav}...`}
         className="rounded-lg h-8 bg-transparent pl-3 text-white border focus:border-none"
         onChange={handleSearch}
       />

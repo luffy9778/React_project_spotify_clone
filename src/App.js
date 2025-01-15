@@ -25,6 +25,9 @@ import ViewAllPlaylist from "./pages/ViewAllPlaylist";
 import PlaylistAlbum from "./pages/PlaylistAlbum";
 import LikedSongsAlbum from "./pages/LikedSongsAlbum";
 import ViewUsers from "./pages/Admin/user/ViewUsers";
+import ViewTags from "./pages/Admin/tags/ViewTags";
+import AddTags from "./pages/Admin/tags/AddTags";
+import TagsAlbum from "./pages/TagsAlbum";
 
 function App() {
   return (
@@ -41,6 +44,7 @@ function App() {
               <Route path="/section" element={<ViewAllPlaylist />} />
               <Route path="/artist/:id" element={<ArtistAlbums />} />
               <Route path="/playlist/:id" element={<PlaylistAlbum />} />
+              <Route path="/tag/:id" element={<TagsAlbum />} />
             </Route>
           </Route>
 
@@ -65,6 +69,11 @@ function App() {
               <Route path="users">
                 <Route index element={<ViewUsers/>} />
                 <Route path="add" element={<AddPlaylist />} />
+                <Route path="edit" element={<EditPlayList />} />
+              </Route>
+              <Route path="tags">
+                <Route index element={<ViewTags/>} />
+                <Route path="add" element={<AddTags />} />
                 <Route path="edit" element={<EditPlayList />} />
               </Route>
             </Route>

@@ -9,7 +9,7 @@ const AlbumHeaderIconSet = ({ type }) => {
         <div>
           <FontAwesomeIcon icon={faPlayCircle} />
         </div>
-        {type !== "Liked" ? (
+        {type !== "Liked" && type!=="tags" ? (
           <>
             <div>Following</div>
             <div>

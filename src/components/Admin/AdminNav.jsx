@@ -51,7 +51,7 @@ const AdminNav = () => {
       </div>
       <div
         className="bg-blue-600 w-36 rounded-lg text-center py-4 "
-        onClick={() => navigate("/Admin/users")}
+        onClick={() => navigate("/Admin/tags")}
       >
         <h1 className="text-xl">Tags</h1>
         <p>{info.tagCount}</p>

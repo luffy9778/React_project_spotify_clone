@@ -11,6 +11,7 @@ const EditSong = () => {
   const [audioError, setAudioError] = useState("");
   const [imageError, setImageError] = useState("");
   const [tags, setTags] = useState("");
+  console.log(tags)
   const [fetchedData, setFetchedData] = useState(false);
 
   const imageInputRef = useRef(null);
@@ -25,7 +26,7 @@ const EditSong = () => {
   const [tagstData, setTagsData] = useState([]);
   const params = useParams();
   useEffect(() => {
-    const fetchArtist = async () => {
+    const fetchData = async () => {
       try {
         const response = await axiosPrivate.get(`/songs/${params.id}`);
         const { songname, artistname, songbgcolour, songtags } =
@@ -40,7 +41,7 @@ const EditSong = () => {
         console.error(error);
       }
     };
-    fetchArtist();
+    fetchData();
   }, []);
 
   useEffect(() => {

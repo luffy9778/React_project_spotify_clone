@@ -2,10 +2,19 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
+import { faCircleCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
-const LikedSongTable = ({ data }) => {
-  const { setCurrentSong, setIsPlaying, setLocal,setSongList,setCurrentIndex } = useContext(UserContext);
-
+const TagAlbumTable = ({ data }) => {
+  const {
+    setCurrentSong,
+    setIsPlaying,
+    setLocal,
+    setCurrentIndex,
+    setSongList,
+    userData,
+    addLikedSong,
+  } = useContext(UserContext);
+  const likedSongs = userData.likedSongs;
   return (
     <div className="px-10 w-full">
       <table className="w-full text-left border-separate border-spacing-y-2">
@@ -25,16 +34,12 @@ const LikedSongTable = ({ data }) => {
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
                 <div
                   onClick={() => {
-                    // setCurrentSong(i);
-                    // setLocal(i);
-                    // setIsPlaying((prv) => !prv);
-
                     setIsPlaying(false);
                     setCurrentSong(i);
                     setIsPlaying(true);
-                    setSongList(data)
-                    setCurrentIndex(index)
-                    setLocal(i)
+                    setSongList(data);
+                    setCurrentIndex(index);
+                    setLocal(i);
                   }}
                 >
                   {index + 1}
@@ -51,6 +56,18 @@ const LikedSongTable = ({ data }) => {
               </td>
               <td className="capitalize flex py-5  justify-between ">
                 <div>{i.artistname.artistname}</div>
+                {likedSongs?.find((x) => x._id === i._id) ? (
+                  <span className="items-center text-green-500">
+                    <FontAwesomeIcon icon={faCircleCheck} />{" "}
+                  </span>
+                ) : (
+                  <span
+                    className="opacity-0  items-center group-hover:opacity-100"
+                    onClick={() => addLikedSong(i._id)}
+                  >
+                    <FontAwesomeIcon icon={faCirclePlus} />
+                  </span>
+                )}
               </td>
               <td className="text-center rounded-tr-2xl  rounded-br-2xl ">
                 2:55
@@ -63,4 +80,4 @@ const LikedSongTable = ({ data }) => {
   );
 };
 
-export default LikedSongTable;
+export default TagAlbumTable;

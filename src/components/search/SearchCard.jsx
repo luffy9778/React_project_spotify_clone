@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import DataContext from "../../context/DataContext";
+import { useNavigate } from "react-router-dom";
 
 const SearchCard = ({ tag }) => {
+  const navigate=useNavigate()
   const { centerWidth } = useContext(DataContext);
 
   let columCount;
@@ -16,6 +18,7 @@ const SearchCard = ({ tag }) => {
     <div
       className="search__card"
       style={{ flex: columCount, backgroundColor: tag.tagBgcolour }}
+      onClick={()=>navigate(`/tag/${tag._id}`)}
     >
       <div className="search__card-text">{tag.tagName}</div>
       <div className="search__card-image">
