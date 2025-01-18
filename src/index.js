@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/UserContext";
 import { SearchProvider } from "./context/SearchContext";
+import { AudioProvider } from "./context/SongContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,9 +16,11 @@ root.render(
       <AuthProvider>
         <DataProvider>
           <UserProvider>
-            <SearchProvider>
-              <App />
-            </SearchProvider>
+            <AudioProvider>
+              <SearchProvider>
+                <App />
+              </SearchProvider>
+            </AudioProvider>
           </UserProvider>
         </DataProvider>
       </AuthProvider>

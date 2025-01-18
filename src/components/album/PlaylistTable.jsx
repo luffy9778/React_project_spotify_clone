@@ -3,17 +3,23 @@ import { faCircleCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
+import AudioContext from "../../context/SongContext";
 
-const PlaylistTable = ({ data }) => {
-  const {
-    setCurrentSong,
-    setIsPlaying,
-    userData,
-    addLikedSong,
-    setLocal,
-    setSongList,
-    setCurrentIndex,
-  } = useContext(UserContext);
+const PlaylistTable = ({ data, id }) => {
+  const { userData, addLikedSong } = useContext(UserContext);
+  const { dispatch, saveSongToLocalStorage } = useContext(AudioContext);
+
+  const handleSongClick = (song, index) => {
+    dispatch({
+      type: "SET_SONG_LIST",
+      payload: { songList: data, currentPage: id },
+    });
+    dispatch({
+      type: "SET_CURRENT_SONG",
+      payload: { song, index },
+    });
+    saveSongToLocalStorage(song);
+  };
   const likedSongs = userData.likedSongs;
 
   return (
@@ -34,14 +40,15 @@ const PlaylistTable = ({ data }) => {
             <tr key={index} className="h-16 hover:bg-slate-500/[0.1] group">
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
                 <div
-                  onClick={() => {
-                    setIsPlaying(false);
-                    setCurrentSong(i);
-                    setIsPlaying(true);
-                    setSongList(data);
-                    setCurrentIndex(index);
-                    setLocal(i);
-                  }}
+                  // onClick={() => {
+                  //   setIsPlaying(false);
+                  //   setCurrentSong(i);
+                  //   setIsPlaying(true);
+                  //   setSongList(data);
+                  //   setCurrentIndex(index);
+                  //   setLocal(i);
+                  // }}
+                  onClick={() => handleSongClick(i, index)}
                 >
                   {index + 1}
                 </div>

@@ -10,12 +10,14 @@ import React, { useContext, useState } from "react";
 import CreditsList from "./CreditsList";
 import DataContext from "../../context/DataContext";
 import UserContext from "../../context/UserContext";
+import AudioContext from "../../context/SongContext";
 // import useUser from "../../hooks/useUser";
 
 const RightsideBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { handleRightSidebarClose } = useContext(DataContext);
-  const { currentSong, addLikedSong,userData } = useContext(UserContext);
+  const {addLikedSong,userData } = useContext(UserContext);
+  const {state:{currentSong}}=useContext(AudioContext)
   // const userData=useUser()
   const likedSongs = userData.likedSongs;
 

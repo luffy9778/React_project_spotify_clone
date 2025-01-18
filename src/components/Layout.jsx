@@ -5,7 +5,6 @@ import Navbar from "./Navbar";
 import LeftSideBar from "./left_side_bar/LeftSideBar";
 import RightsideBar from "./right_side_bar/RightsideBar";
 import Footer from "./Footer";
-import UserContext from "../context/UserContext";
 
 const Layout = () => {
   const [isHoveredLeft, setIsHoveredLeft] = useState(false);
@@ -21,7 +20,6 @@ const Layout = () => {
     setLeftWidth,
   } = useContext(DataContext);
 
-  const { audioRef, currentSong } = useContext(UserContext);
   const scrollRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -127,13 +125,6 @@ const Layout = () => {
         </div>
       </div>
       <Footer />
-
-      <audio
-        ref={audioRef}
-        src={currentSong?.songfile_url}
-        preload="auto"
-        autoPlay
-      ></audio>
     </>
   );
 };

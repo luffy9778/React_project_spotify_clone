@@ -2,10 +2,21 @@ import { faCircleCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
+import AudioContext from "../../context/SongContext";
 
-const ArtistTable = ({ data }) => {
-  const { setCurrentSong, setIsPlaying, addLikedSong, userData,setLocal,setCurrentIndex,setSongList } =
-    useContext(UserContext);
+const ArtistTable = ({ data,id }) => {
+  const { addLikedSong, userData } = useContext(UserContext);
+  const { dispatch, saveSongToLocalStorage } = useContext(AudioContext);
+
+  const handleSongClick = (song, index) => {
+    dispatch({ type: "SET_SONG_LIST", payload: { songList: data,currentPage:id },
+    });
+    dispatch({
+      type: "SET_CURRENT_SONG",
+      payload: { song, index },
+    });
+    saveSongToLocalStorage(song);
+  };
   const likedSongs = userData.likedSongs;
   return (
     <div className="px-10 w-full">
@@ -16,14 +27,15 @@ const ArtistTable = ({ data }) => {
             <tr key={index} className="h-16 hover:bg-slate-500/[0.1] group">
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl w-1/12">
                 <div
-                  onClick={() => {
-                    setIsPlaying(false);
-                    setCurrentSong(i);
-                    setIsPlaying(true);
-                    setSongList(data)
-                    setCurrentIndex(index)
-                    setLocal(i)
-                  }}
+                  // onClick={() => {
+                  //   setIsPlaying(false);
+                  //   setCurrentSong(i);
+                  //   setIsPlaying(true);
+                  //   setSongList(data)
+                  //   setCurrentIndex(index)
+                  //   setLocal(i)
+                  // }}
+                  onClick={() => handleSongClick(i, index)}
                 >
                   {index + 1}
                 </div>

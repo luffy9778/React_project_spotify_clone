@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import DataContext from "../context/DataContext";
 import UserContext from "../context/UserContext";
+import AudioContext from "../context/SongContext";
 // import useUser from "../hooks/useUser";
 
 const Footer = () => {
@@ -32,22 +33,20 @@ const Footer = () => {
     rightWidth,
   } = useContext(DataContext);
 
+  const { addLikedSong, userData } = useContext(UserContext);
   const {
-    currentSong,
-    pause,
-    play,
-    isPlaying,
-    songDuration,
-    songCurrentTime,
-    addLikedSong,
-    // audioRef,
-    next,
-    previous,
-    isShuffle,
-    setIsShuffle,
-    userData
-  } = useContext(UserContext);
-// const userData=useUser()
+    state: {
+      currentSong,
+      isPlaying,
+      songDuration,
+      songCurrentTime,
+      isShuffle,
+      songList,
+    },
+    dispatch,
+  } = useContext(AudioContext);
+
+  // const userData=useUser()
   const likedSongs = userData.likedSongs;
   const seekwidth = (songCurrentTime / songDuration) * 100;
 
@@ -56,6 +55,37 @@ const Footer = () => {
   //   console.log(newVolume);
   //   audioRef.current.volume = newVolume;
   // };
+
+  const handleShuffle = () => {
+    dispatch({
+      type: "SET_SHUFFLE",
+      payload: !isShuffle,
+    });
+  };
+  // Play or Pause the song
+  const handlePlayPause = () => {
+    dispatch({
+      type: "TOGGLE_PLAY",
+    });
+  };
+
+  // Play next song
+  const handleNext = () => {
+    if (songList.length > 0) {
+      dispatch({
+        type: "NEXT_SONG",
+      });
+    }
+  };
+
+  // Play previous song
+  const handlePrevious = () => {
+    if (songList.length > 0) {
+      dispatch({
+        type: "PREVIOUS_SONG",
+      });
+    }
+  };
 
   const handleArrowClick = () => {
     setIsRightSideBarColsed((prv) => !prv);
@@ -108,22 +138,22 @@ const Footer = () => {
           <div className="footer-conrols-icon">
             <FontAwesomeIcon
               icon={faShuffle}
-              onClick={() => setIsShuffle((prv) => !prv)}
+              onClick={handleShuffle}
               style={{ color: isShuffle && "rgb(71, 211, 71)" }}
             />
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faBackwardStep} onClick={() => previous()} />
+            <FontAwesomeIcon icon={faBackwardStep} onClick={handlePrevious} />
           </div>
           <div className="footer-conrols-icon">
             {isPlaying && currentSong ? (
-              <FontAwesomeIcon icon={faPause} onClick={() => pause()} />
+              <FontAwesomeIcon icon={faPause} onClick={handlePlayPause} />
             ) : (
-              <FontAwesomeIcon icon={faPlay} onClick={() => play()} />
+              <FontAwesomeIcon icon={faPlay} onClick={handlePlayPause} />
             )}
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faForwardStep} onClick={() => next()} />
+            <FontAwesomeIcon icon={faForwardStep} onClick={handleNext} />
           </div>
           <div className="footer-conrols-icon">
             <FontAwesomeIcon icon={faRepeat} />
@@ -141,7 +171,11 @@ const Footer = () => {
             ></div>
           </div>
           <span>
-            {Math.floor(songDuration / 60)}:{Math.floor(songDuration % 60)}
+            {songDuration
+              ? `${Math.floor(songDuration / 60)}:${Math.floor(
+                  songDuration % 60
+                )}`
+              : "0:0"}
           </span>
         </div>
       </div>

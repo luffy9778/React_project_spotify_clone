@@ -1,11 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AlbumHeader from "../components/album/AlbumHeader";
 import UserContext from "../context/UserContext";
 import LikedSongTable from "../components/album/LikedSongTable";
+import AudioContext from "../context/SongContext";
 
 const LikedSongsAlbum = () => {
   const { userData } = useContext(UserContext);
   const likedSongs = userData.likedSongs;
+  const {
+    dispatch,
+    saveSongToLocalStorage,
+    state: { currentPage, isPlaying },
+  } = useContext(AudioContext);
+  const [albumPalyStatus, setAlbumPalyStatus] = useState(false);
+
+  //for play/pause buton on the header
+  const playAlbum = () => {
+    if (currentPage==="likedSongs") {
+      dispatch({ type: "TOGGLE_PLAY" });
+    } else {
+      dispatch({
+        type: "SET_SONG_LIST",
+        payload: { songList: likedSongs, currentPage: "likedSongs" },
+      });
+      dispatch({
+        type: "SET_CURRENT_SONG",
+        payload: { song: likedSongs[0], index: 0 },
+      });
+      saveSongToLocalStorage(likedSongs[0]);
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying && likedSongs.length > 0 && currentPage === "likedSongs") {
+      setAlbumPalyStatus(true);
+    } else setAlbumPalyStatus(false);
+  }, [isPlaying, likedSongs, currentPage]);
+  
   return (
     <div className="album-container">
       <AlbumHeader
@@ -15,6 +46,8 @@ const LikedSongsAlbum = () => {
         }
         name={"Liked Songs"}
         bgcolour={"#4d2adb"}
+        playAlbum={playAlbum}
+        albumPalyStatus={albumPalyStatus}
       />
       <LikedSongTable data={likedSongs} />
     </div>
