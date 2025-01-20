@@ -22,7 +22,6 @@ import React, { useContext, useState } from "react";
 import DataContext from "../context/DataContext";
 import UserContext from "../context/UserContext";
 import AudioContext from "../context/SongContext";
-// import useUser from "../hooks/useUser";
 
 const Footer = () => {
   const [isImgHovered, setIsImgHovered] = useState(false);
@@ -38,17 +37,17 @@ const Footer = () => {
     state: {
       currentSong,
       isPlaying,
-      songDuration,
       songCurrentTime,
       isShuffle,
       songList,
+      isRepeat,
     },
     dispatch,
+    audioRef,
   } = useContext(AudioContext);
 
-  // const userData=useUser()
   const likedSongs = userData.likedSongs;
-  const seekwidth = (songCurrentTime / songDuration) * 100;
+  const seekwidth = (songCurrentTime / currentSong?.duration) * 100;
 
   // const handleVolume = (e) => {
   //   const newVolume = Number(e.target.value)
@@ -71,7 +70,14 @@ const Footer = () => {
 
   // Play next song
   const handleNext = () => {
-    if (songList.length > 0) {
+    if (isRepeat) {
+      audioRef.current.currentTime = 0;
+      return dispatch({
+        type: "UPDATE_TIME",
+        payload: 0,
+      });
+    }
+    if (songList.length > 1) {
       dispatch({
         type: "NEXT_SONG",
       });
@@ -80,9 +86,30 @@ const Footer = () => {
 
   // Play previous song
   const handlePrevious = () => {
-    if (songList.length > 0) {
+    if (isRepeat) {
+      audioRef.current.currentTime = 0;
+      return dispatch({
+        type: "UPDATE_TIME",
+        payload: 0,
+      });
+    }
+    if (songList.length > 1) {
       dispatch({
         type: "PREVIOUS_SONG",
+      });
+    }
+  };
+
+  const handleSeekBarClick = (e) => {
+    const seekBar = e.currentTarget;
+    const rect = seekBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left; // Position of the click relative to the seek bar
+    const newTime = (clickX / seekBar.offsetWidth) * currentSong?.duration; // Calculate the new time
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+      dispatch({
+        type: "UPDATE_TIME",
+        payload: newTime,
       });
     }
   };
@@ -140,10 +167,21 @@ const Footer = () => {
               icon={faShuffle}
               onClick={handleShuffle}
               style={{ color: isShuffle && "rgb(71, 211, 71)" }}
+              // size="sm"
             />
           </div>
           <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faBackwardStep} onClick={handlePrevious} />
+            <FontAwesomeIcon
+              icon={faBackwardStep}
+              onClick={handlePrevious}
+              style={{
+                cursor: isRepeat
+                  ? "pointer"
+                  : songList.length > 1
+                  ? "pointer"
+                  : "not-allowed",
+              }}
+            />
           </div>
           <div className="footer-conrols-icon">
             {isPlaying && currentSong ? (
@@ -152,30 +190,51 @@ const Footer = () => {
               <FontAwesomeIcon icon={faPlay} onClick={handlePlayPause} />
             )}
           </div>
-          <div className="footer-conrols-icon">
+          <div
+            className="footer-conrols-icon"
+            style={{
+              cursor: isRepeat
+                ? "pointer"
+                : songList.length > 1
+                ? "pointer"
+                : "not-allowed",
+            }}
+          >
             <FontAwesomeIcon icon={faForwardStep} onClick={handleNext} />
           </div>
-          <div className="footer-conrols-icon">
-            <FontAwesomeIcon icon={faRepeat} />
+          <div
+            className="footer-conrols-icon"
+            onClick={() => {
+              dispatch({ type: "TOOGLE_REPEAT" });
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faRepeat}
+              style={{ color: isRepeat && "green" }}
+            />
           </div>
         </div>
         <div className="footer-control-seekbar-container">
           <span>
             {Math.floor(songCurrentTime / 60)}:
-            {Math.floor(songCurrentTime % 60)}
+            {Math.round(songCurrentTime % 60)
+              .toString()
+              .padStart(2, "0")}
           </span>
-          <div className="footer-control-seekbar">
+          <div className="footer-control-seekbar" onClick={handleSeekBarClick}>
             <div
               className="footer-control-seekbar-grow"
               style={{ width: `${seekwidth}%` }}
             ></div>
           </div>
           <span>
-            {songDuration
-              ? `${Math.floor(songDuration / 60)}:${Math.floor(
-                  songDuration % 60
-                )}`
-              : "0:0"}
+            {currentSong?.duration
+              ? `${Math.floor(currentSong?.duration / 60)}:${Math.round(
+                  currentSong?.duration % 60
+                )
+                  .toString()
+                  .padStart(2, "0")}`
+              : "0:00"}
           </span>
         </div>
       </div>

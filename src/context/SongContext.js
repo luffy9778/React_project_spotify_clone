@@ -18,23 +18,42 @@ export const AudioProvider = ({ children }) => {
 
   // Update duration and current time
   useEffect(() => {
+    console.log("bdbhdbg", state.songList.length);
     if (audioRef.current) {
       const audio = audioRef.current;
       const updateTime = () => {
         dispatch({
           type: "UPDATE_TIME",
-          payload: {
-            duration: audio.duration,
-            currentTime: audio.currentTime,
-          },
+          payload: audio.currentTime,
         });
       };
+      const endTime = () => {
+        if (state.isRepeat) {
+          dispatch({ type: "UPDATE_TIME", payload: 0 });
+          audioRef.current.currentTime=0
+          audioRef.current.play();
+        } else if (state.songList.length > 1) {
+          dispatch({
+            type: "NEXT_SONG",
+          });
+        } else {
+          dispatch({
+            type: "TOGGLE_PLAY",
+          });
+          dispatch({
+            type: "UPDATE_TIME",
+            payload: 0,
+          });
+        }
+      };
       audio.addEventListener("timeupdate", updateTime);
+      audio.addEventListener("ended", endTime);
       return () => {
         audio.removeEventListener("timeupdate", updateTime);
+        audio.removeEventListener("ended", endTime);
       };
     }
-  }, []);
+  }, [state.currentSong,state.isRepeat]);
 
   useEffect(() => {
     try {
@@ -51,10 +70,10 @@ export const AudioProvider = ({ children }) => {
   }, []);
 
   const saveSongToLocalStorage = (song) => {
-    try {        
-        localStorage.setItem("lastplayedSong", JSON.stringify(song));
+    try {
+      localStorage.setItem("lastplayedSong", JSON.stringify(song));
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 

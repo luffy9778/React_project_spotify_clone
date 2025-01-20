@@ -14,7 +14,7 @@
 
 /*///////---------scroll bar----------/////////*/
 ::-webkit-scrollbar {
-  width: 8px; 
+  width: 3px; 
   height: 1px; 
   opacity: 0;
 }
@@ -306,6 +306,7 @@ nav{
   border-radius: 10px;
   margin-left:15px ;
   overflow-y: hidden;
+  scrollbar-gutter: stable;
 }
 /*/////////////////////////////////////////////////////////////////////////*/
 .lsidebar-component:hover{
@@ -501,6 +502,7 @@ height: 45px;
   border-radius: 10px;
   margin-right:10px;
   overflow-y: hidden;
+  scrollbar-gutter: stable;
   /* overflow-x:auto; */
 }
 .rsidebar-component:hover{
@@ -711,6 +713,7 @@ height: 45px;
   margin-inline:10px ;
   overflow-y: hidden;
   position: relative;
+  scrollbar-gutter: stable;
 }
 .page-container:hover{
   overflow-y: scroll;
@@ -1006,11 +1009,14 @@ height: 45px;
   background-color: rgb(69, 69, 69);
   border-radius: 5px;
 }
+.footer-control-seekbar:hover{
+  height: 5px;
+}
 .footer-control-seekbar-grow{
   position: absolute;
   top: 0;
   left: 0;
-  width:40%;
+  /* width:40%; */
   height: 100%;
   background-color:white;
   border-radius: 5px;

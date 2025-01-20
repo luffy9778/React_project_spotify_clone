@@ -1,13 +1,23 @@
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { faCircleCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faCirclePlus,
+  faPause,
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import AudioContext from "../../context/SongContext";
+import { Audio } from "react-loader-spinner";
 
 const PlaylistTable = ({ data, id }) => {
   const { userData, addLikedSong } = useContext(UserContext);
-  const { dispatch, saveSongToLocalStorage } = useContext(AudioContext);
+  const {
+    dispatch,
+    saveSongToLocalStorage,
+    state: { currentSong, isPlaying },
+  } = useContext(AudioContext);
 
   const handleSongClick = (song, index) => {
     dispatch({
@@ -39,18 +49,38 @@ const PlaylistTable = ({ data, id }) => {
           return (
             <tr key={index} className="h-16 hover:bg-slate-500/[0.1] group">
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
-                <div
-                  // onClick={() => {
-                  //   setIsPlaying(false);
-                  //   setCurrentSong(i);
-                  //   setIsPlaying(true);
-                  //   setSongList(data);
-                  //   setCurrentIndex(index);
-                  //   setLocal(i);
-                  // }}
-                  onClick={() => handleSongClick(i, index)}
-                >
-                  {index + 1}
+                <div>
+                  {currentSong.songname === i.songname && isPlaying ? (
+                    <>
+                      <span
+                        className="justify-center hidden group-hover:flex"
+                        onClick={() => dispatch({ type: "TOGGLE_PLAY" })}
+                      >
+                        <FontAwesomeIcon icon={faPause} />
+                      </span>
+                      <div className="group-hover:hidden">
+                        <Audio
+                          height="25"
+                          width="25"
+                          color="#02c415"
+                          ariaLabel="audio-loading"
+                          wrapperStyle={{ justifyContent: "center" }}
+                          wrapperClass="wrapper-class"
+                          visible={true}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <span className="group-hover:hidden">{index + 1}</span>
+                      <div
+                        className="justify-center hidden group-hover:flex"
+                        onClick={() => handleSongClick(i, index)}
+                      >
+                        <FontAwesomeIcon icon={faPlay} />
+                      </div>
+                    </>
+                  )}
                 </div>
               </td>
               <td>
@@ -78,7 +108,7 @@ const PlaylistTable = ({ data, id }) => {
                 )}
               </td>
               <td className="text-center rounded-tr-2xl  rounded-br-2xl ">
-                2:55
+              {Math.floor(i?.duration/60)}:{Math.round(i?.duration%60).toString().padStart(2,"0")}
               </td>
             </tr>
           );
