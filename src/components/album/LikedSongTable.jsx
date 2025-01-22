@@ -1,19 +1,23 @@
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
-import UserContext from "../../context/UserContext";
 import AudioContext from "../../context/SongContext";
 import { Audio } from "react-loader-spinner";
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faPause,
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
+import UserContext from "../../context/UserContext";
 
 const LikedSongTable = ({ data }) => {
-  // const { setCurrentSong, setIsPlaying, setLocal,setSongList,setCurrentIndex } = useContext(UserContext);
-
   const {
     dispatch,
     saveSongToLocalStorage,
     state: { currentSong, isPlaying },
   } = useContext(AudioContext);
+
+  const { removeLikedSong } = useContext(UserContext);
 
   const handleSongClick = (song, index) => {
     dispatch({
@@ -45,7 +49,7 @@ const LikedSongTable = ({ data }) => {
             <tr key={index} className="h-16 hover:bg-slate-500/[0.1] group">
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
                 <div>
-                  {currentSong.songname === i.songname && isPlaying ? (
+                  {currentSong?.songname === i.songname && isPlaying ? (
                     <>
                       <span
                         className="justify-center hidden group-hover:flex"
@@ -87,11 +91,19 @@ const LikedSongTable = ({ data }) => {
                   {i.songname}
                 </div>
               </td>
-              <td className="capitalize flex py-5  justify-between ">
+              <td className="capitalize flex py-5  justify-between items-center">
                 <div>{i.artistname.artistname}</div>
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-green-500 opacity-0 group-hover:opacity-100"
+                  onClick={() => removeLikedSong(i._id)}
+                />
               </td>
               <td className="text-center rounded-tr-2xl  rounded-br-2xl ">
-              {Math.floor(i?.duration/60)}:{Math.round(i?.duration%60).toString().padStart(2,"0")}
+                {Math.floor(i?.duration / 60)}:
+                {Math.round(i?.duration % 60)
+                  .toString()
+                  .padStart(2, "0")}
               </td>
             </tr>
           );

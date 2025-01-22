@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const [isRightSideBarColsed, setIsRightSideBarColsed] = useState(false);
   const [rightWidth, setRightWidth] = useState(285);
   const [leftWidth, setLeftWidth] = useState(285);
+  console.log(isRightSideBarColsed,"right",rightWidth)
 
   const centerWidth = window.innerWidth - (leftWidth + rightWidth);
   //for handle rightsidebar closing
@@ -30,7 +31,6 @@ export const DataProvider = ({ children }) => {
         leftWidth,
         setLeftWidth,
         centerWidth,
-        // scrollPosition,setScrollposition,
         bgColor,
         setBgColor,
       }}

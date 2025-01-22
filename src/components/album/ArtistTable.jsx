@@ -11,7 +11,7 @@ import AudioContext from "../../context/SongContext";
 import { Audio } from "react-loader-spinner";
 
 const ArtistTable = ({ data, id }) => {
-  const { addLikedSong, userData } = useContext(UserContext);
+  const { addLikedSong, userData ,removeLikedSong} = useContext(UserContext);
   const {
     dispatch,
     saveSongToLocalStorage,
@@ -85,7 +85,7 @@ const ArtistTable = ({ data, id }) => {
                 <div className="flex justify-between pr-12">
                   {likedSongs?.find((x) => x._id === i._id) ? (
                     <span className="items-center text-green-500">
-                      <FontAwesomeIcon icon={faCircleCheck} />{" "}
+                      <FontAwesomeIcon icon={faCircleCheck} onClick={()=>removeLikedSong(i._id)}/>
                     </span>
                   ) : (
                     <span

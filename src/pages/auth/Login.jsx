@@ -15,21 +15,21 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setErrMsg('');
-}, [username, password])
+    setErrMsg("");
+  }, [username, password]);
 
   const handelLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3500/auth/login",
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         {
           username,
           password,
@@ -39,17 +39,17 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data)
+      console.log(response.data);
       const accessToken = response.data.accessToken;
-      const user= response.data.userInfo.name;
-      const roles= response.data.userInfo.roles;
-      setAuth({ user,roles, accessToken });
-      setUsername("")
+      const user = response.data.userInfo.name;
+      const roles = response.data.userInfo.roles;
+      setAuth({ user, roles, accessToken });
+      setUsername("");
       setPassword("");
-      if(roles?.includes("Admin")){
-        navigate("/Admin")
-      }else{
-        navigate("/")
+      if (roles?.includes("Admin")) {
+        navigate("/Admin");
+      } else {
+        navigate("/");
       }
     } catch (err) {
       if (!err?.response) {
@@ -57,14 +57,13 @@ const Login = () => {
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
+        setErrMsg("Invalid username or password");
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
+      errRef?.current?.focus();
     }
   };
-
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-b from-gray-800 to-black login-container">
@@ -75,12 +74,13 @@ const Login = () => {
         </div>
         <div>
           <form className="flex flex-col" onSubmit={handelLogin}>
-            <div
-              className={errMsg?"text-center text-red-500 p-1 pb-2":""}
+
+          { errMsg&&<div
+              className={errMsg ? "text-center text-red-500 p-1 pb-2" : ""}
               ref={errRef}
             >
               {errMsg}
-            </div>
+            </div>}
             <input
               type="text"
               placeholder="Email or username"

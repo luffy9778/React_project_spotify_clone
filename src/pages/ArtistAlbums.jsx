@@ -56,6 +56,7 @@ const ArtistAlbums = () => {
     <div className="album-container">
       <AlbumHeader
         type={"Artist"}
+        artistId={albumData?._id}
         image={albumData?.artistimage_Url}
         name={albumData?.artistname}
         bgcolour={albumData?.artistbgcolour}

@@ -28,10 +28,12 @@ import ViewUsers from "./pages/Admin/user/ViewUsers";
 import ViewTags from "./pages/Admin/tags/ViewTags";
 import AddTags from "./pages/Admin/tags/AddTags";
 import TagsAlbum from "./pages/TagsAlbum";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer/>
       <Routes>
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={"User"} />}>

@@ -4,7 +4,7 @@ export const initialAudioState = {
   songList: [],
   currentIndex: 0,
   isShuffle: false,
-  isRepeat:false,
+  isRepeat: false,
   songCurrentTime: 0,
   currentPage: null,
 };
@@ -65,12 +65,24 @@ export const audioReducer = (state, action) => {
     case "UPDATE_TIME":
       return {
         ...state,
-        songCurrentTime: action.payload
+        songCurrentTime: action.payload,
       };
     case "TOOGLE_REPEAT":
       return {
         ...state,
         isRepeat: !state.isRepeat,
+      };
+    case "LOGOUT":
+      return {
+        ...state,
+        currentSong: null,
+        isPlaying: false,
+        songList: [],
+        currentIndex: 0,
+        isShuffle: false,
+        isRepeat: false,
+        songCurrentTime: 0,
+        currentPage: null,
       };
     default:
       return state;

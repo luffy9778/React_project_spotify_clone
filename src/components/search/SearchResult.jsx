@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import HomeAlbumListCard from "../home/HomeAlbumListCard";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import AudioContext from "../../context/SongContext";
 
 const SearchResult = ({ result }) => {
+  const {
+    dispatch,
+    saveSongToLocalStorage,
+    state: { currentSong, isPlaying },
+  } = useContext(AudioContext);
+
   const [category, setCategory] = useState("all");
-const navigate=useNavigate()
+  const navigate = useNavigate();
+
+  const handleSongClick = (song) => {
+    dispatch({
+      type: "SET_SONG_LIST",
+      payload: { songList: [], currentPage: null },
+    });
+    dispatch({
+      type: "SET_CURRENT_SONG",
+      payload: { song, index: 0 },
+    });
+    saveSongToLocalStorage(song);
+  };
 
   const getListObj = () => {
     const list = [];
@@ -22,12 +43,28 @@ const navigate=useNavigate()
     <>
       <h1 className="text-3xl mt-10 font-bold">Songs</h1>
       {result?.songs?.map((i) => (
-        <div className="flex px-5 py-3 rounded-md hover:bg-slate-100 hover:bg-opacity-20 group">
+        <div className="flex relative px-5 py-3 rounded-md hover:bg-slate-100 hover:bg-opacity-20 group">
+          <div className=" absolute h-14 w-14 rounded-md flex opacity-0 hover:opacity-100 transition-opacity duration-200 items-center justify-center text-2xl">
+            {currentSong?.songname === i.songname && isPlaying ? (
+              <FontAwesomeIcon
+                icon={faPause}
+                onClick={() => dispatch({ type: "TOGGLE_PLAY" })}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faPlay}
+                className="text-slate-200"
+                onClick={() => handleSongClick(i)}
+              />
+            )}
+          </div>
           <img src={i.songimage_url} className="h-14 w-14 rounded-md " />
           <div className="pl-4">
             <p>{i.songname}</p>
-            <p className="font-extralight text-zinc-400 group-hover:text-white hover:underline"
-            onClick={()=>navigate(`/artist/${i.artistname._id}`)}>
+            <p
+              className="font-extralight text-zinc-400 group-hover:text-white hover:underline"
+              onClick={() => navigate(`/artist/${i.artistname._id}`)}
+            >
               {i.artistname.artistname}
             </p>
           </div>
@@ -41,8 +78,10 @@ const navigate=useNavigate()
       <h1 className="text-3xl mt-10 font-bold">Artists</h1>
       <div className="flex">
         {result?.artists?.map((i) => (
-          <div className="p-3 m-3 hover:bg-slate-300 hover:bg-opacity-5 rounded-lg"
-          onClick={()=>navigate(`/artist/${i._id}`)}>
+          <div
+            className="p-3 m-3 hover:bg-slate-300 hover:bg-opacity-5 rounded-lg"
+            onClick={() => navigate(`/artist/${i._id}`)}
+          >
             <div className="rounded-full h-48 w-48 overflow-hidden">
               <img
                 src={i.artistimage_Url}

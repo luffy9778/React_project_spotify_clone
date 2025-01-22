@@ -6,54 +6,53 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
-    const[username,setUsername]=useState("")
-    const[password,setPassword]=useState("")
-    const[errMsg,setErrMsg]=useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
-    const userRef=useRef()
-    const errRef=useRef()
+  const userRef = useRef();
+  const errRef = useRef();
 
-    const navigate=useNavigate()
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        userRef.current.focus()
-    },[])
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
 
-    useEffect(()=>{
-      setErrMsg("")
-    },[username,password])
+  useEffect(() => {
+    setErrMsg("");
+  }, [username, password]);
 
-    const handelRegister = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await axios.post(
-          "http://localhost:3500/auth/register",
-          {
-            username,
-            password,
-          },
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
-        setUsername("")
-        setPassword("");
-        navigate("/login")
-      } catch (err) {
-        if (!err?.response) {
-          setErrMsg("no server response");
-        } else if (err.response?.status === 400) {
-          setErrMsg("Missing Username or Password");
-        } else if (err.response?.status === 409) {
-          setErrMsg("username already taken");
-        } else {
-          setErrMsg("registration Failed");
+  const handelRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/register`,
+        {
+          username,
+          password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
-        errRef.current.focus();
+      );
+      setUsername("");
+      setPassword("");
+      navigate("/login");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("no server response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 409) {
+        setErrMsg("username already taken");
+      } else {
+        setErrMsg("registration Failed");
       }
-    };
-  
+      errRef.current.focus();
+    }
+  };
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-b from-gray-800 to-black login-container">
@@ -67,25 +66,27 @@ const SignUp = () => {
         </div>
         <div>
           <form className="flex flex-col" onSubmit={handelRegister}>
-          <div
-              className={errMsg?"text-center text-red-500 p-1 pb-2":""}
+            <div
+              className={errMsg ? "text-center text-red-500 p-1 pb-2" : ""}
               ref={errRef}
             >
               {errMsg}
             </div>
-            <input 
-                type="text" 
-                placeholder="Email or username"
-                required
-                ref={userRef}
-                value={username}
-                onChange={(e)=>setUsername(e.target.value)} />
             <input
-                type="password"
-                placeholder="Password"
-                required
-                value={password}
-                onChange={(e)=>setPassword(e.target.value)}  />
+              type="text"
+              placeholder="Email or username"
+              required
+              ref={userRef}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <button className="bg-green-500 mx-24 rounded-full py-3 font-bold text-xl text-black my-3 hover:scale-105 focus:ring-2 focus:ring-white transition-all duration-150">
               Sign Up
             </button>

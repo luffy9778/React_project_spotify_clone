@@ -7,7 +7,7 @@ const useRefreshToken = () => {
     const refresh=async()=>{
       try {
         const response = await axios.get(
-            "http://localhost:3500/auth/refresh",
+          `${process.env.REACT_APP_API_URL}/auth/refresh`,
             { withCredentials: true }
           );
           console.log("refreshtoken")

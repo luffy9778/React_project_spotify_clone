@@ -7,7 +7,7 @@ const ViewUsers = () => {
   const [loading, setLoading] = useState(false);
   console.log(users);
   useEffect(() => {
-    const socket = io("http://localhost:3500/admin", {
+    const socket = io(`${process.env.REACT_APP_API_URL}/admin`, {
       transports: ["websocket"],
     });
     socket.on("connection", () => {

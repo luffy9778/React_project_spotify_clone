@@ -18,13 +18,14 @@ import {
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DataContext from "../context/DataContext";
 import UserContext from "../context/UserContext";
 import AudioContext from "../context/SongContext";
 
 const Footer = () => {
   const [isImgHovered, setIsImgHovered] = useState(false);
+
   const {
     isRightSideBarColsed,
     setIsRightSideBarColsed,
@@ -32,7 +33,7 @@ const Footer = () => {
     rightWidth,
   } = useContext(DataContext);
 
-  const { addLikedSong, userData } = useContext(UserContext);
+  const { addLikedSong, userData, removeLikedSong } = useContext(UserContext);
   const {
     state: {
       currentSong,
@@ -44,16 +45,23 @@ const Footer = () => {
     },
     dispatch,
     audioRef,
+    temp, setTemp
   } = useContext(AudioContext);
+
+  useEffect(() => {
+    if (!currentSong) {
+      return setIsRightSideBarColsed(true);
+    }
+    if (currentSong) {
+      if (!temp) {
+        setIsRightSideBarColsed(false);
+        setTemp(true)
+      }
+    }
+  }, [currentSong]);
 
   const likedSongs = userData.likedSongs;
   const seekwidth = (songCurrentTime / currentSong?.duration) * 100;
-
-  // const handleVolume = (e) => {
-  //   const newVolume = Number(e.target.value)
-  //   console.log(newVolume);
-  //   audioRef.current.volume = newVolume;
-  // };
 
   const handleShuffle = () => {
     dispatch({
@@ -114,7 +122,7 @@ const Footer = () => {
     }
   };
 
-  const handleArrowClick = () => {
+  function handleArrowClick() {
     setIsRightSideBarColsed((prv) => !prv);
     if (rightWidth === 0) {
       setRightWidth(285);
@@ -128,37 +136,46 @@ const Footer = () => {
   return (
     <div className="footer-component">
       <div className="footer-song-component">
-        <div
-          className="footer-song-image-container"
-          onMouseEnter={() => setIsImgHovered(true)}
-          onMouseLeave={() => setIsImgHovered(false)}
-        >
-          <div
-            onClick={handleArrowClick}
-            style={{ display: isImgHovered ? "flex" : "none" }}
-          >
-            {showRightSideBarIcon}
-          </div>
-          <img src={currentSong?.songimage_url} alt="song-image" />
-        </div>
-        <div>
-          <div className="footer-song-name capitalize">
-            {currentSong?.songname}
-          </div>
-          <div className="footer-song-artists capitalize">
-            {currentSong?.artistname.artistname}
-          </div>
-        </div>
-        <div className="footer-song-addIcon">
-          {likedSongs?.find((x) => x._id === currentSong?._id) ? (
-            <FontAwesomeIcon icon={faCircleCheck} className="text-green-500" />
-          ) : (
-            <FontAwesomeIcon
-              icon={faCirclePlus}
-              onClick={() => addLikedSong(currentSong._id)}
-            />
-          )}
-        </div>
+        {currentSong && (
+          <>
+            {" "}
+            <div
+              className="footer-song-image-container"
+              onMouseEnter={() => setIsImgHovered(true)}
+              onMouseLeave={() => setIsImgHovered(false)}
+            >
+              <div
+                onClick={handleArrowClick}
+                style={{ display: isImgHovered ? "flex" : "none" }}
+              >
+                {showRightSideBarIcon}
+              </div>
+              <img src={currentSong?.songimage_url} alt="song-image" />
+            </div>
+            <div>
+              <div className="footer-song-name capitalize">
+                {currentSong?.songname}
+              </div>
+              <div className="footer-song-artists capitalize">
+                {currentSong?.artistname.artistname}
+              </div>
+            </div>
+            <div className="footer-song-addIcon">
+              {likedSongs?.find((x) => x._id === currentSong?._id) ? (
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-green-500"
+                  onClick={() => removeLikedSong(currentSong._id)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCirclePlus}
+                  onClick={() => addLikedSong(currentSong._id)}
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
       <div className="footer-controls-component">
         <div className="footer-controls-icon-container">

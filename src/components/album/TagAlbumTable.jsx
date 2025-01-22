@@ -12,7 +12,7 @@ import AudioContext from "../../context/SongContext";
 import { Audio } from "react-loader-spinner";
 
 const TagAlbumTable = ({ data, id }) => {
-  const { userData, addLikedSong } = useContext(UserContext);
+  const { userData, addLikedSong,removeLikedSong } = useContext(UserContext);
   const {
     dispatch,
     saveSongToLocalStorage,
@@ -49,7 +49,7 @@ const TagAlbumTable = ({ data, id }) => {
             <tr key={index} className="h-16 hover:bg-slate-500/[0.1] group">
               <td className=" text-center rounded-tl-2xl  rounded-bl-2xl ">
                 <div>
-                  {currentSong.songname === i.songname && isPlaying ? (
+                  {currentSong?.songname === i.songname && isPlaying ? (
                     <>
                       <span
                         className="justify-center hidden group-hover:flex"
@@ -95,7 +95,10 @@ const TagAlbumTable = ({ data, id }) => {
                 <div>{i.artistname.artistname}</div>
                 {likedSongs?.find((x) => x._id === i._id) ? (
                   <span className="items-center text-green-500">
-                    <FontAwesomeIcon icon={faCircleCheck} />{" "}
+                    <FontAwesomeIcon
+                      icon={faCircleCheck}
+                      onClick={() => removeLikedSong(i._id)}
+                    />
                   </span>
                 ) : (
                   <span
@@ -107,7 +110,10 @@ const TagAlbumTable = ({ data, id }) => {
                 )}
               </td>
               <td className="text-center rounded-tr-2xl  rounded-br-2xl ">
-              {Math.floor(i?.duration/60)}:{Math.round(i?.duration%60).toString().padStart(2,"0")}
+                {Math.floor(i?.duration / 60)}:
+                {Math.round(i?.duration % 60)
+                  .toString()
+                  .padStart(2, "0")}
               </td>
             </tr>
           );

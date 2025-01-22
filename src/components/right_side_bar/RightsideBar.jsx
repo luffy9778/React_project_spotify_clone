@@ -16,8 +16,10 @@ import AudioContext from "../../context/SongContext";
 const RightsideBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { handleRightSidebarClose } = useContext(DataContext);
-  const {addLikedSong,userData } = useContext(UserContext);
-  const {state:{currentSong}}=useContext(AudioContext)
+  const { addLikedSong, userData, removeLikedSong } = useContext(UserContext);
+  const {
+    state: { currentSong },
+  } = useContext(AudioContext);
   // const userData=useUser()
   const likedSongs = userData.likedSongs;
 
@@ -63,7 +65,10 @@ const RightsideBar = () => {
             </div>
             <div className="rsisebar-song-details-addicon">
               {likedSongs?.find((x) => x._id === currentSong?._id) ? (
-                <FontAwesomeIcon icon={faCircleCheck} />
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  onClick={() => removeLikedSong(currentSong._id)}
+                />
               ) : (
                 <FontAwesomeIcon
                   icon={faCirclePlus}

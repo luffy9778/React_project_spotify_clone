@@ -3,10 +3,12 @@ import AlbumHeader from "../components/album/AlbumHeader";
 import UserContext from "../context/UserContext";
 import LikedSongTable from "../components/album/LikedSongTable";
 import AudioContext from "../context/SongContext";
+import { useNavigate } from "react-router-dom";
 
 const LikedSongsAlbum = () => {
   const { userData } = useContext(UserContext);
   const likedSongs = userData.likedSongs;
+  const navigate = useNavigate();
   const {
     dispatch,
     saveSongToLocalStorage,
@@ -14,9 +16,13 @@ const LikedSongsAlbum = () => {
   } = useContext(AudioContext);
   const [albumPalyStatus, setAlbumPalyStatus] = useState(false);
 
+  useEffect(() => {
+    if (likedSongs?.length === 0) navigate("/");
+  }, [likedSongs, navigate]);
+
   //for play/pause buton on the header
   const playAlbum = () => {
-    if (currentPage==="likedSongs") {
+    if (currentPage === "likedSongs") {
       dispatch({ type: "TOGGLE_PLAY" });
     } else {
       dispatch({
@@ -36,7 +42,7 @@ const LikedSongsAlbum = () => {
       setAlbumPalyStatus(true);
     } else setAlbumPalyStatus(false);
   }, [isPlaying, likedSongs, currentPage]);
-  
+
   return (
     <div className="album-container">
       <AlbumHeader

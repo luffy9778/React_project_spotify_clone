@@ -1,11 +1,16 @@
-import React, { createContext, useReducer, useRef, useEffect } from "react";
+import React, { createContext, useReducer, useRef, useEffect, useState, useContext } from "react";
 import { audioReducer, initialAudioState } from "./SongReducer";
+import DataContext from "./DataContext";
 
 const AudioContext = createContext();
 
 export const AudioProvider = ({ children }) => {
   const [state, dispatch] = useReducer(audioReducer, initialAudioState);
   const audioRef = useRef(null);
+
+//temp variable for accesing users 1st song play when page load and show the right sideBar
+const[temp, setTemp] = useState(false);
+const{setIsRightSideBarColsed}=useContext(DataContext)
 
   // Play or pause based on `isPlaying`
   useEffect(() => {
@@ -63,7 +68,10 @@ export const AudioProvider = ({ children }) => {
           type: "SET_CURRENT_SONG_FROM_STORAGE",
           payload: { song: lastplayedSong },
         });
+        setIsRightSideBarColsed(false)
+        setTemp(true)
       }
+
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +87,7 @@ export const AudioProvider = ({ children }) => {
 
   return (
     <AudioContext.Provider
-      value={{ state, dispatch, audioRef, saveSongToLocalStorage }}
+      value={{ state, dispatch, audioRef, saveSongToLocalStorage,temp, setTemp }}
     >
       {children}
       <audio

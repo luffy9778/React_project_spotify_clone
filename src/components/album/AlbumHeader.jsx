@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import AlbumHeaderIconSet from "./AlbumHeaderIconSet";
 import UserContext from "../../context/UserContext";
 
-const AlbumHeader = ({ type, image, name, bgcolour,playAlbum,albumPalyStatus }) => {
+const AlbumHeader = ({ type, image, name, bgcolour,playAlbum,albumPalyStatus,artistId }) => {
   const { userData } = useContext(UserContext);
   return (
     <div
@@ -48,7 +48,7 @@ const AlbumHeader = ({ type, image, name, bgcolour,playAlbum,albumPalyStatus }) 
           )}
         </div>
       </div>
-      <AlbumHeaderIconSet type={type} playAlbum={playAlbum} albumPalyStatus={albumPalyStatus} />
+      <AlbumHeaderIconSet type={type} playAlbum={playAlbum} albumPalyStatus={albumPalyStatus} artistId={artistId} name={name} />
     </div>
   );
 };
