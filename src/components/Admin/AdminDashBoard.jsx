@@ -14,7 +14,7 @@ export const AdminDashBoard = () => {
         <AdminNav />
         <div className="h-5/6 relative">
           <Outlet />
-          <AdminFooter />
+          {/* <AdminFooter /> */}
         </div>
       </div>
     </div>

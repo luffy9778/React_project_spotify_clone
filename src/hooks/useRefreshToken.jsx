@@ -10,7 +10,6 @@ const useRefreshToken = () => {
           `${process.env.REACT_APP_API_URL}/auth/refresh`,
             { withCredentials: true }
           );
-          console.log("refreshtoken")
           setAuth(prv=>{
             return {...prv,
             accessToken:response.data.accessToken,

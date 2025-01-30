@@ -53,7 +53,7 @@ const RightsideBar = () => {
               {currentSong?.songname}
             </h2>
             <p className="rsisebar-song-artist">
-              {currentSong?.artistname.artistname}
+              {currentSong?.artistname?.artistname}
             </p>
           </div>
           <div className="rsisebar-song-details-iconset">

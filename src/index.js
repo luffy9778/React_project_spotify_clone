@@ -8,7 +8,9 @@ import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/UserContext";
 import { SearchProvider } from "./context/SearchContext";
 import { AudioProvider } from "./context/SongContext";
+import {disableReactDevTools} from "@fvilers/disable-react-devtools"
 
+if(process.env.NODE_ENV==="production")disableReactDevTools()
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

@@ -32,7 +32,6 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (auth?.accessToken) {
       const socket = io(process.env.REACT_APP_API_URL);
-      console.log("usersoket");
       socket.emit("userOnline", userData._id);
       return () => {
         socket.disconnect();

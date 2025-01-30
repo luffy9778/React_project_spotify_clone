@@ -18,11 +18,15 @@ const ViewAllPlaylist = () => {
     fetchPlaylist();
   }, []);
   return (
-    <div>
+    <div className="px-5">
+    <h2 className="pt-5 text-xl font-extrabold">Made For You</h2>
+    <div className="flex flex-wrap py-5">
       {playListData.map((item) => (
         <HomeAlbumListCard key={item._id} item={item} />
       ))}
     </div>
+    </div>
+    
   );
 };
 

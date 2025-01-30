@@ -23,7 +23,6 @@ const{setIsRightSideBarColsed}=useContext(DataContext)
 
   // Update duration and current time
   useEffect(() => {
-    console.log("bdbhdbg", state.songList.length);
     if (audioRef.current) {
       const audio = audioRef.current;
       const updateTime = () => {

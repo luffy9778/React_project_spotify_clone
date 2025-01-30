@@ -1,8 +1,11 @@
 import React from 'react'
+import AdminFooter from '../../components/Admin/AdminFooter'
 
 const AdminHome = () => {
-  return (
+  return (<>
     <div>AdminHome</div>
+    <AdminFooter/>
+    </>
   )
 }
 
